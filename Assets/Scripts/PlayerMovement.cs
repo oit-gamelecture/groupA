@@ -6,8 +6,9 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 3.0f;
     public float leftRightSpeed = 4.0f;
-    public float limit = 5.0f;
+    public float limit = 4.0f;
     public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
