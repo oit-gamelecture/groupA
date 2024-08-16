@@ -4,36 +4,84 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 3.0f;
-    public float leftRightSpeed = 4.0f;
-    public float limit = 4.0f;
-    public Animator animator;
+    public float speed;
+    public float laneSpeed;
+    public float jumpLength;
+    public float jumpHeight;
 
-    // Start is called before the first frame update
+    private Animator anim;
+    private Rigidbody rb;
+    private int currentLane = 3;
+    private Vector3 verticalTargetPosition;
+    private bool jumping = false;
+    private float jumpStart;
+
+    //Use this for initialization
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+    //Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed, Space.World);
-        
-        if(Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if(transform.position.x > -limit)
-            {
-                transform.Translate(Vector3.left * Time.deltaTime * leftRightSpeed);
-            }
+            ChangeLane(-3);
+        }
+        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            ChangeLane(3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
         }
 
-        if(Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow))
+        if (jumping)
         {
-            if(transform.position.x < limit)
+            float ratio = (transform.position.z - jumpStart) / jumpLength;
+            if (ratio >= 1f)
             {
-                transform.Translate(Vector3.left * Time.deltaTime * leftRightSpeed * -1);
+                jumping = false;
+                anim.SetBool("Jumping", false);
             }
+            else
+            {
+                verticalTargetPosition.y = Mathf.Sin(ratio * Mathf.PI) * jumpHeight;
+            }
+        }
+        else
+        {
+            verticalTargetPosition.y = Mathf.MoveTowards(verticalTargetPosition.y, 0, 5 * Time.deltaTime);
+        }
+        Vector3 targetPosition = new Vector3(verticalTargetPosition.x, verticalTargetPosition.y, transform.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, laneSpeed * Time.deltaTime);
+    }
+
+    private void FixedUpdate()
+    {
+        rb.velocity = Vector3.forward * speed;
+    }
+
+    void ChangeLane(int direction)
+    {
+        int targetLane = currentLane + direction;
+        if (targetLane < 0 || targetLane > 6)
+            return;
+        currentLane = targetLane;
+        verticalTargetPosition = new Vector3((currentLane - 3), 0, 0);
+    }
+
+    void Jump()
+    {
+        if (!jumping)
+        {
+            jumpStart = transform.position.z;
+            anim.SetFloat("JumpSpeed", speed / jumpLength);
+            anim.SetBool("Jumping", true);
+            jumping = true;
         }
     }
 }
