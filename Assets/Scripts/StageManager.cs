@@ -78,14 +78,14 @@ public class AutoStage : MonoBehaviour
     {
         int nextStage = Random.Range(0, stagenum.Length);　//ステージプレハブからランダムに選ぶ
 
-        GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(0, -0.5f, index * StageSize), Quaternion.identity);
+        GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(0, -0.5f, index * StageSize + 40), Quaternion.identity);
 
         return stageObject;
     }
 
     void DestroyStage()　//ステージを削除する
     {
-        // 最初のステージ（リストの最初のエントリ）を削除しない
+        
         if (StageList[0] != StageList[FirstStageIndex])
         {
             GameObject oldStage = StageList[0];
