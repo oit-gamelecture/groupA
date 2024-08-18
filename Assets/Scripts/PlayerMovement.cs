@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class PlayerMovement : MonoBehaviour
     public float laneSpeed;
     public float jumpLength;
     public float jumpHeight;
+    public float MaxHealth;
+    public Slider slide;
 
+    private float currentHealth; 
     private Animator anim;
     private Rigidbody rb;
     private int currentLane = 3;
@@ -21,6 +25,9 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        currentHealth = MaxHealth;
+        slide.maxValue = MaxHealth;
+        slide.value = MaxHealth;
     }
 
     //Update is called once per frame
@@ -83,5 +90,21 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("Jumping", true);
             jumping = true;
         }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.tag == "enemy")
+        {
+            TakeDamage(1f);
+            anim.SetTrigger("Damage");
+            
+        }
+    }
+
+    void TakeDamage(float Damage)
+    {
+        currentHealth = currentHealth - Damage;
+        slide.value = currentHealth;
     }
 }
