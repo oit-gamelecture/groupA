@@ -5,7 +5,7 @@ using UnityEngine;
 public class AutoStage : MonoBehaviour
 {
 
-    int StageSize = 20; //ステージの奥行サイズ（後で変更可）
+    int StageSize = 80; //ステージの奥行サイズ（後で変更可）
     int StageIndex;
 
     public Transform Target;//プレイヤーを当てる
@@ -21,7 +21,7 @@ public class AutoStage : MonoBehaviour
     public float maxObstacleInterval = 3f; // 障害物生成の最大間隔（後で変更可）
 
     private float nextObstacleTime; // 次に障害物を生成する時間の変数
-    public float obstacleDistance = 30f; // 障害物をプレイヤーからどれだけ離して生成するか(テスト)
+    public float obstacleDistance = 40f; // 障害物をプレイヤーからどれだけ離して生成するか(テスト)
 
 
     private int[] xPositions = { 0, -3, 3 }; // 障害物の生成をするx座標（ここからランダムに）
@@ -85,9 +85,13 @@ public class AutoStage : MonoBehaviour
 
     void DestroyStage()　//ステージを削除する
     {
-        GameObject oldStage = StageList[0];
-        StageList.RemoveAt(0);
-        Destroy(oldStage);
+        // 最初のステージ（リストの最初のエントリ）を削除しない
+        if (StageList[0] != StageList[FirstStageIndex])
+        {
+            GameObject oldStage = StageList[0];
+            StageList.RemoveAt(0);
+            Destroy(oldStage); // インスタンスを削除
+        }
     }
 
     void GenerateObstacle() // 障害物を生成する
