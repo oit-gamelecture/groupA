@@ -11,12 +11,14 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight;
     public float MaxHealth;
     public Slider slide;
+    public bool strike;
 
     private float currentHealth; 
     private Animator anim;
     private Rigidbody rb;
     private int currentLane = 3;
     private Vector3 verticalTargetPosition;
+    private bool jumpManager;
     private bool jumping = false;
     private float jumpStart;
 
@@ -98,6 +100,12 @@ public class PlayerMovement : MonoBehaviour
         {
             TakeDamage(1f);
             anim.SetTrigger("Damage");
+            strike = true;
+            if(jumpManager == true)
+            {
+                Vector3 targetPosition = new Vector3(0, 0, -10);
+                rb.MovePosition(targetPosition);
+            }
             
         }
     }
