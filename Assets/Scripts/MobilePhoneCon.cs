@@ -26,13 +26,14 @@ public class MobilePhoneCon : MonoBehaviour
     {
         originalPosition = image.rectTransform.localPosition;
         targetPosition1 = image.rectTransform.localPosition + new Vector3(0, 200, 0);
-        targetPosition2 = image.rectTransform.localPosition + new Vector3(0, 550, 0);
+        targetPosition2 = image.rectTransform.localPosition + new Vector3(0, 700, 0);
         audioSource = GetComponent<AudioSource>();
         content = textBox.GetComponent<Text>();
         blindfold.SetActive(false);
 
         // コルーチンを開始
         StartCoroutine(CallMethodAtRandomIntervals());
+
     }
 
     // Update is called once per frame

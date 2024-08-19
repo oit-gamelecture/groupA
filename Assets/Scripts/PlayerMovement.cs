@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public Slider slide;
     public bool strike;
 
-    private float currentHealth; 
+    private float currentHealth;
     private Animator anim;
     private Rigidbody rb;
     private int currentLane = 3;
@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
         currentHealth = MaxHealth;
         slide.maxValue = MaxHealth;
         slide.value = MaxHealth;
+
+        Application.targetFrameRate = 60;
     }
 
     //Update is called once per frame
@@ -96,17 +98,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.tag == "enemy")
+        if (other.gameObject.tag == "enemy")
         {
             TakeDamage(1f);
             anim.SetTrigger("Damage");
             strike = true;
-            if(jumpManager == true)
+            if (jumpManager == true)
             {
                 Vector3 targetPosition = new Vector3(0, 0, -10);
                 rb.MovePosition(targetPosition);
             }
-            
+
         }
     }
 
