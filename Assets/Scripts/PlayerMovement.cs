@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
@@ -13,25 +14,23 @@ public class PlayerMovement : MonoBehaviour
     public Slider slide;
     public bool strike;
 
-    private float currentHealth;
+    private float currentHealth; 
     private Animator anim;
     private Rigidbody rb;
     private int currentLane = 3;
     private Vector3 verticalTargetPosition;
-    private bool jumpManager;
+    private bool jumpManager = false;
     private bool jumping = false;
     private float jumpStart;
 
     //Use this for initialization
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         currentHealth = MaxHealth;
         slide.maxValue = MaxHealth;
         slide.value = MaxHealth;
-
-        Application.targetFrameRate = 60;
     }
 
     //Update is called once per frame
@@ -98,17 +97,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "enemy")
+        if(other.gameObject.tag == "enemy")
         {
             TakeDamage(1f);
+            jumpManager = true;
             anim.SetTrigger("Damage");
             strike = true;
-            if (jumpManager == true)
+            if(jumpManager == true)
             {
-                Vector3 targetPosition = new Vector3(0, 0, -10);
-                rb.MovePosition(targetPosition);
+                Vector3 force = new Vector3(0, 0, -10);
+                rb.AddForce(force);
             }
-
+            
         }
     }
 
@@ -116,5 +116,9 @@ public class PlayerMovement : MonoBehaviour
     {
         currentHealth = currentHealth - Damage;
         slide.value = currentHealth;
+        if(slide.value == 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
 }

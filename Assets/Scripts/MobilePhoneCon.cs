@@ -26,14 +26,10 @@ public class MobilePhoneCon : MonoBehaviour
     {
         originalPosition = image.rectTransform.localPosition;
         targetPosition1 = image.rectTransform.localPosition + new Vector3(0, 200, 0);
-        targetPosition2 = image.rectTransform.localPosition + new Vector3(0, 700, 0);
+        targetPosition2 = image.rectTransform.localPosition + new Vector3(0, 550, 0);
         audioSource = GetComponent<AudioSource>();
         content = textBox.GetComponent<Text>();
         blindfold.SetActive(false);
-
-        // コルーチンを開始
-        StartCoroutine(CallMethodAtRandomIntervals());
-
     }
 
     // Update is called once per frame
@@ -42,7 +38,7 @@ public class MobilePhoneCon : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !isMoving)
         {
             // コルーチンを開始して位置を移動する
-            //StartCoroutine(MoveImage());
+            StartCoroutine(MoveImage());
         }
     }
 
@@ -143,18 +139,5 @@ public class MobilePhoneCon : MonoBehaviour
 
         blindfold.SetActive(false);
         isMoving = false;
-    }
-
-    private IEnumerator CallMethodAtRandomIntervals()
-    {
-        while (true)
-        {
-            // 15秒から30秒の間でランダムな時間を待機
-            float randomInterval = Random.Range(15f, 30f);
-            yield return new WaitForSeconds(randomInterval);
-            StartCoroutine(MoveImage());
-            // メソッドを呼び出し
-
-        }
     }
 }
