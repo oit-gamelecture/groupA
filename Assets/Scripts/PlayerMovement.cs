@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight;
     public float MaxHealth;
     public Slider slide;
+    public bool strike;
 
     private float currentHealth; 
     private Animator anim;
