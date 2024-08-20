@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
@@ -107,5 +108,9 @@ public class PlayerMovement : MonoBehaviour
     {
         currentHealth = currentHealth - Damage;
         slide.value = currentHealth;
+        if(slide.value == 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
 }
