@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight;
     public float MaxHealth;
     public Slider slide;
-    public bool strike;
+    public bool strike = false;
+    public bool isFeatureActive = true;
 
     private float currentHealth; 
     private Animator anim;
@@ -70,8 +72,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        rb.velocity = Vector3.forward * speed;
+    {   if (isFeatureActive)
+        {
+            rb.velocity = Vector3.forward * speed;
+        }
     }
 
     void ChangeLane(int direction)
@@ -96,12 +100,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.tag == "enemy")
+        if (other.gameObject.tag == "enemy")
         {
             TakeDamage(1f);
             anim.SetTrigger("Damage");
-            
+            strike = true;
+            StartCoroutine("DisableFeatureCoroutine");
         }
+    }
+
+    IEnumerator DisableFeatureCoroutine()
+    {
+        isFeatureActive = false;
+        rb.velocity = Vector3.forward * -speed;
+        speed = -3;
+        yield return new WaitForSeconds(3f);
+        isFeatureActive = true;
     }
 
     void TakeDamage(float Damage)
