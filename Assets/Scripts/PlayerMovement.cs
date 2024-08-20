@@ -72,10 +72,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {   if (isFeatureActive)
-        {
-            rb.velocity = Vector3.forward * speed;
-        }
+    {
+        rb.velocity = Vector3.forward * speed;
     }
 
     void ChangeLane(int direction)
@@ -111,11 +109,10 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DisableFeatureCoroutine()
     {
-        isFeatureActive = false;
-        rb.velocity = Vector3.forward * -speed;
-        speed = -3;
-        yield return new WaitForSeconds(3f);
-        isFeatureActive = true;
+        
+        speed = -6;
+        yield return new WaitForSeconds(1f);
+        speed = 10;
     }
 
     void TakeDamage(float Damage)
