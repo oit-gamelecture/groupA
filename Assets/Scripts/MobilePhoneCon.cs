@@ -25,7 +25,7 @@ public class MobilePhoneCon : MonoBehaviour
     void Start()
     {
         //fpsを60に固定
-        Application.targetFrameRate = 10;
+        Application.targetFrameRate = 60;
 
 
         originalPosition = image.rectTransform.localPosition;
