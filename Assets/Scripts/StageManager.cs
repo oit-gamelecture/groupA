@@ -23,8 +23,11 @@ public class AutoStage : MonoBehaviour
     private float nextObstacleTime; // 次に障害物を生成する時間の変数
     public float obstacleDistance = 40f; // 障害物をプレイヤーからどれだけ離して生成するか(テスト)
 
-
     private int[] xPositions = { 0, -3, 3 }; // 障害物の生成をするx座標（ここからランダムに）
+
+    public GameObject goalPrefab; // ゴールのプレハブ
+    private bool isGoalGenerated = false; // ゴールが生成されたかどうかを追跡するフラグ
+    private float timer = 0f; // ゴールを出現させるタイミングを図るタイマー
 
     // Start is called before the first frame update
     void Start()
@@ -37,12 +40,28 @@ public class AutoStage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        timer += Time.deltaTime; // タイマーを更新
+
         int targetPosIndex = (int)(Target.position.z / StageSize);　//プレイヤーがどこにいるのか
 
         if (targetPosIndex + aheadStage > StageIndex)　　//必要性に応じてステージ生成関数を呼び出し
         {
+            if (isGoalGenerated) //上手くいかないので二重になってるけど気にしないで
+            {
+                if (Time.time >= nextObstacleTime) //現在の時間が次の障害物生成時間を超えているかを確認し呼び出し
+                {
+                    GenerateObstacle(); //障害物の生成
+                    ScheduleNextObstacle(); //次の生成時間の計算
+                }
+
+                RemovePassedObstacles(); // プレイヤーが通り過ぎた障害物を削除
+                return;
+            }
+
             StageManager(targetPosIndex + aheadStage);
         }
+
 
         if (Time.time >= nextObstacleTime)　//現在の時間が次の障害物生成時間を超えているかを確認し呼び出し
         {
@@ -50,7 +69,13 @@ public class AutoStage : MonoBehaviour
             ScheduleNextObstacle();　//次の生成時間の計算
         }
 
-        RemovePassedObstacles(); // プレイヤーが通り過ぎた障害物を削除（テスト）
+        RemovePassedObstacles(); // プレイヤーが通り過ぎた障害物を削除
+
+        if (timer >= 95f && !isGoalGenerated) // タイムが95に達したとき
+        {
+            GenerateGoalStage(); // ゴールステージを生成
+            isGoalGenerated = true; // ゴールが生成されたことを記録
+        }
 
     }
     void StageManager(int maps)
@@ -76,16 +101,16 @@ public class AutoStage : MonoBehaviour
 
     GameObject MakeStage(int index)　//ステージを生成する
     {
+
         int nextStage = Random.Range(0, stagenum.Length);　//ステージプレハブからランダムに選ぶ
 
-        GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(0, -0.5f, index * StageSize + 40), Quaternion.identity);
+        GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(0, -0.5f, index * StageSize + 40 + 0.05f), Quaternion.identity);
 
         return stageObject;
     }
 
     void DestroyStage()　//ステージを削除する
     {
-        
         if (StageList[0] != StageList[FirstStageIndex])
         {
             GameObject oldStage = StageList[0];
@@ -120,6 +145,14 @@ public class AutoStage : MonoBehaviour
                 Destroy(passedObstacle);
             }
         }
+    }
+
+    void GenerateGoalStage()　//ゴールをリストに追加する
+    {
+        Vector3 goalPosition = new Vector3(0, -0.5f, StageIndex * StageSize + 120 + 0.05f); //ゴールのプレハブのサイズによって120を40+サイズに変更して
+        GameObject goalStage = Instantiate(goalPrefab, goalPosition, Quaternion.identity);
+        StageList.Add(goalStage); // ゴールステージをリストに追加
+
     }
 
 }
