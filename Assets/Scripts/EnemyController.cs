@@ -6,6 +6,8 @@ public class EnemyController : MonoBehaviour
 {
     private Transform player;
     public int speed = 5;
+    public float destroySpeed = 3f;
+    public float duration = 3.0f;
     public int distance = 100;
     // Start is called before the first frame update
     void Start()
@@ -23,7 +25,7 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            transform.position = new Vector3(0, transform.position.y, transform.position.z);
+            transform.position = new Vector3(3, transform.position.y, transform.position.z);
         }
 
 
@@ -40,4 +42,30 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            collision.collider.enabled = false;
+            StartCoroutine("MoveDestroyCoroutine");
+        }
+        
+    }
+
+    IEnumerator MoveDestroyCoroutine()
+    {
+        float timeElapsed = 0.0f;
+
+        while(timeElapsed < duration)
+        {
+            transform.Translate(Vector3.left * destroySpeed * Time.deltaTime);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(gameObject);
+    }
+
+
 }
