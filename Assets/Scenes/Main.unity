@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.625131, g: 0.69543827, b: 0.78916645, a: 1}
+  m_IndirectSpecularColor: {r: 0.6251372, g: 0.695441, b: 0.7891682, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -207,7 +207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7121871214762976637, guid: 268fdd02da9e2d545a6c84ae2c230ace, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 650
       objectReference: {fileID: 0}
     - target: {fileID: 7121871214762976637, guid: 268fdd02da9e2d545a6c84ae2c230ace, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -586,7 +586,8 @@ MonoBehaviour:
   stagenum:
   - {fileID: 201751362945448899, guid: aba62e6639e24b644b5fb6637a8f5b9d, type: 3}
   obstacles:
-  - {fileID: 3459852192276553334, guid: 599803cbc34f2394cba5c1051337b9a0, type: 3}
+  - {fileID: 117884, guid: 75f9a59d6ed455149b2c7ba975114f3d, type: 3}
+  - {fileID: 6217859664019750943, guid: 0686c32a15c162d4abc1f288576f4a25, type: 3}
   FirstStageIndex: 1
   aheadStage: 3
   StageList:

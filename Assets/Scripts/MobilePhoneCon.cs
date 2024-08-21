@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 
 public class MobilePhoneCon : MonoBehaviour
 {
-    //public GameObject blindfold;  //目隠しを入れるオブジェクト
+    public GameObject blindfold;  //目隠しを入れるオブジェクト
     public Image image;  // コントロールするImageオブジェクト
     public float duration = 1.0f;  // アニメーションの時間
     private Vector3 originalPosition;  // Imageの初期位置
@@ -28,12 +28,12 @@ public class MobilePhoneCon : MonoBehaviour
         Application.targetFrameRate = 60;
 
 
-        originalPosition = new Vector3(0, -1110, 0); //image.rectTransform.localPosition;
+        originalPosition = image.rectTransform.localPosition;
         targetPosition1 = image.rectTransform.localPosition + new Vector3(0, 200, 0);
-        targetPosition2 = image.rectTransform.localPosition + new Vector3(0, 1150, 0);
+        targetPosition2 = image.rectTransform.localPosition + new Vector3(0, 700, 0);
         audioSource = GetComponent<AudioSource>();
         content = textBox.GetComponent<Text>();
-        //blindfold.SetActive(false);
+        blindfold.SetActive(false);
 
         // コルーチンを開始
         StartCoroutine(CallMethodAtRandomIntervals());
@@ -102,101 +102,50 @@ public class MobilePhoneCon : MonoBehaviour
     public IEnumerator MoveImage()
     {
         isMoving = true;
-        float elapsedTime = 0f; // 経過時間
+        float elapsedTime = 0f; //経過した時間
         audioSource.PlayOneShot(notification);
         RandomText();
 
-        // 最初の目標位置に移動
         while (elapsedTime < duration)
         {
             image.rectTransform.localPosition = Vector3.Lerp(originalPosition, targetPosition1, elapsedTime / duration * 5);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
         audioSource.PlayOneShot(heartBeat);
+        blindfold.SetActive(true);
+
         image.rectTransform.localPosition = targetPosition1;
 
-        // 3秒待ってWキーが押されたか確認
-        float waitTime = 0f;
-        bool movedToSecondPosition = false;
+        yield return new WaitForSeconds(3f);
+        elapsedTime = 0f;
 
-        while (waitTime < 5f)
+        while (elapsedTime < duration)
         {
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                movedToSecondPosition = true;
-                break;
-            }
-            waitTime += Time.deltaTime;
+            image.rectTransform.localPosition = Vector3.Lerp(targetPosition1, targetPosition2, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        if (movedToSecondPosition)
+        audioSource.Stop();
+        // 画像を新しい位置に移動する
+        image.rectTransform.localPosition = targetPosition2;
+
+        // 3秒待つ
+        yield return new WaitForSeconds(3f);
+
+        elapsedTime = 0f;
+        while (elapsedTime < duration)
         {
-            // Wキーが押されたので次の目標位置に移動
-            elapsedTime = 0f;
-            while (elapsedTime < duration)
-            {
-                image.rectTransform.localPosition = Vector3.Lerp(targetPosition1, targetPosition2, elapsedTime / duration * 3);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            image.rectTransform.localPosition = targetPosition2;
-
-            //売るか、保持するかの処理
-
-            bool decisionMade = false;
-            waitTime = 0f;
-
-            while (waitTime < 5f && (!decisionMade || waitTime < 2f))
-            {
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    Debug.Log("売った！！");
-                    decisionMade = true;
-                }
-                else if (Input.GetKeyDown(KeyCode.S))
-                {
-                    Debug.Log("保持した！！");
-                    decisionMade = true;
-                }
-                waitTime += Time.deltaTime;
-                yield return null;
-            }
-
-            // 1秒待つ
-            //yield return new WaitForSeconds(1f);
-            audioSource.Stop();
-
-            // 元の位置に戻る
-            elapsedTime = 0f;
-            while (elapsedTime < duration)
-            {
-                image.rectTransform.localPosition = Vector3.Lerp(targetPosition2, originalPosition, elapsedTime / duration);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            image.rectTransform.localPosition = originalPosition;
-        }
-        else
-        {
-            // 何も押されなかったので元の位置に戻る
-            elapsedTime = 0f;
-            while (elapsedTime < duration)
-            {
-                image.rectTransform.localPosition = Vector3.Lerp(targetPosition1, originalPosition, elapsedTime / duration);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            image.rectTransform.localPosition = originalPosition;
-            audioSource.Stop();
+            image.rectTransform.localPosition = Vector3.Lerp(targetPosition2, originalPosition, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
 
+        // 元の位置に戻す
+        image.rectTransform.localPosition = originalPosition;
 
+        blindfold.SetActive(false);
         isMoving = false;
     }
 
@@ -206,7 +155,7 @@ public class MobilePhoneCon : MonoBehaviour
         {
             // 15秒から30秒の間でランダムな時間を待機
             float randomInterval = Random.Range(15f, 30f);
-            yield return new WaitForSeconds(20);
+            yield return new WaitForSeconds(randomInterval);
             StartCoroutine(MoveImage());
             // メソッドを呼び出し
 

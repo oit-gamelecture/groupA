@@ -99,7 +99,7 @@ public class AutoStage : MonoBehaviour
         int xPos = xPositions[Random.Range(0, xPositions.Length)];　//３つのx座標からランダムに
         int obstacleIndex = Random.Range(0, obstacles.Length);　//障害物プレハブからランダムに
 
-        Vector3 spawnPosition = new Vector3(xPos, 0.5f, Target.position.z + obstacleDistance); // プレイヤーから一定距離先に生成
+        Vector3 spawnPosition = new Vector3(xPos, -0.5f, Target.position.z + obstacleDistance); // プレイヤーから一定距離先に生成
         GameObject obstacle = Instantiate(obstacles[obstacleIndex], spawnPosition, Quaternion.identity);
 
         ObstacleList.Add(obstacle); // 障害物をリストに追加
