@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
         speed = -6;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.7f);
         speed = 10;
     }
 
