@@ -6,66 +6,57 @@ using UnityEngine.SceneManagement;
 public class AutoStage : MonoBehaviour
 {
 
-    int StageSize = 80; //ï¿½Xï¿½eï¿½[ï¿½Wï¿½Ì‰ï¿½ï¿½sï¿½Tï¿½Cï¿½Yï¿½iï¿½ï¿½Å•ÏXï¿½Âj
+    int StageSize = 80; //ƒXƒe[ƒW‚Ì‰œsƒTƒCƒYiŒã‚Å•ÏX‰Âj
     int StageIndex;
 
-    public Transform Target;//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ğ“–‚Ä‚ï¿½
-    public GameObject[] stagenum;//ï¿½Xï¿½eï¿½[ï¿½Wï¿½Ìƒvï¿½ï¿½ï¿½nï¿½u
-    public GameObject[] obstacles; // ï¿½ï¿½Qï¿½ï¿½ï¿½Ìƒvï¿½ï¿½ï¿½nï¿½u
-    public int FirstStageIndex;//ï¿½Xï¿½^ï¿½[ï¿½gï¿½ï¿½ï¿½É‚Ç‚ÌƒCï¿½ï¿½ï¿½fï¿½bï¿½Nï¿½Xï¿½ï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½Wï¿½ğ¶ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½
-    public int aheadStage; //ï¿½ï¿½ï¿½Oï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½W
-    public List<GameObject> StageList = new List<GameObject>();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½Wï¿½Ìƒï¿½ï¿½Xï¿½g
-    public List<GameObject> ObstacleList = new List<GameObject>(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½ï¿½Ìƒï¿½ï¿½Xï¿½g
+    public Transform Target;//ƒvƒŒƒCƒ„[‚ğ“–‚Ä‚é
+    public GameObject[] stagenum;//ƒXƒe[ƒW‚ÌƒvƒŒƒnƒu
+    public GameObject[] obstacles; // áŠQ•¨‚ÌƒvƒŒƒnƒu
+    public int FirstStageIndex;//ƒXƒ^[ƒg‚É‚Ç‚ÌƒCƒ“ƒfƒbƒNƒX‚©‚çƒXƒe[ƒW‚ğ¶¬‚·‚é‚Ì‚©
+    public int aheadStage; //–‘O‚É¶¬‚µ‚Ä‚¨‚­ƒXƒe[ƒW
+    public List<GameObject> StageList = new List<GameObject>();//¶¬‚µ‚½ƒXƒe[ƒW‚ÌƒŠƒXƒg
+    public List<GameObject> ObstacleList = new List<GameObject>(); // ¶¬‚µ‚½áŠQ•¨‚ÌƒŠƒXƒg
 
 
-    public float minObstacleInterval = 1f; // ï¿½ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌÅï¿½ï¿½ÔŠuï¿½iï¿½ï¿½Å•ÏXï¿½Âj
-    public float maxObstacleInterval = 3f; // ï¿½ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌÅ‘ï¿½ÔŠuï¿½iï¿½ï¿½Å•ÏXï¿½Âj
+    public float minObstacleInterval = 1f; // áŠQ•¨¶¬‚ÌÅ¬ŠÔŠuiŒã‚Å•ÏX‰Âj
+    public float maxObstacleInterval = 3f; // áŠQ•¨¶¬‚ÌÅ‘åŠÔŠuiŒã‚Å•ÏX‰Âj
 
-    private float nextObstacleTime; // ï¿½ï¿½ï¿½Éï¿½Qï¿½ï¿½ï¿½ğ¶ï¿½ï¿½ï¿½ï¿½éï¿½Ô‚Ì•Ïï¿½
-    public float obstacleDistance = 40f; // ï¿½ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½Ç‚ê‚¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚©(ï¿½eï¿½Xï¿½g)
+    private float nextObstacleTime; // Ÿ‚ÉáŠQ•¨‚ğ¶¬‚·‚éŠÔ‚Ì•Ï”
+    public float obstacleDistance = 40f; // áŠQ•¨‚ğƒvƒŒƒCƒ„[‚©‚ç‚Ç‚ê‚¾‚¯—£‚µ‚Ä¶¬‚·‚é‚©(ƒeƒXƒg)
 
-    private int[] xPositions = { 0, -3, 3 }; // ï¿½ï¿½Qï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½Wï¿½iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½çƒ‰ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½Éj
+    private int[] xPositions = { 0, -3, 3 }; // áŠQ•¨‚Ì¶¬‚ğ‚·‚éxÀ•Wi‚±‚±‚©‚çƒ‰ƒ“ƒ_ƒ€‚Éj
 
-    public GameObject goalPrefab; // ï¿½Sï¿½[ï¿½ï¿½ï¿½Ìƒvï¿½ï¿½ï¿½nï¿½u
-    private bool isGoalGenerated = false; // ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½ï¿½ÇÕ‚ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½O
-    private float timer = 0f; // ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Cï¿½~ï¿½ï¿½ï¿½Oï¿½ï¿½}ï¿½ï¿½^ï¿½Cï¿½}ï¿½[
+    public GameObject goalPrefab; // ƒS[ƒ‹‚ÌƒvƒŒƒnƒu
+    private bool isGoalGenerated = false; // ƒS[ƒ‹‚ª¶¬‚³‚ê‚½‚©‚Ç‚¤‚©‚ğ’ÇÕ‚·‚éƒtƒ‰ƒO
+    private float timer = 0f; // ƒS[ƒ‹‚ğoŒ»‚³‚¹‚éƒ^ƒCƒ~ƒ“ƒO‚ğ}‚éƒ^ƒCƒ}[
 
     // Start is called before the first frame update
     void Start()
     {
-        StageIndex = FirstStageIndex - 1;ï¿½@//
-        StageManager(aheadStage);ï¿½@//ï¿½wï¿½è‚µï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½Éï¿½ï¿½ï¿½
-        ScheduleNextObstacle();ï¿½@//ï¿½Åï¿½ï¿½Ìï¿½Qï¿½ï¿½ï¿½Ìƒ^ï¿½Cï¿½~ï¿½ï¿½ï¿½O
+        StageIndex = FirstStageIndex - 1;@//
+        StageManager(aheadStage);@//w’è‚µ‚½”•ªƒXƒe[ƒW‚ğ–‘O‚É¶¬
+        ScheduleNextObstacle();@//Å‰‚ÌáŠQ•¨‚Ìƒ^ƒCƒ~ƒ“ƒO
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        timer += Time.deltaTime; // ï¿½^ï¿½Cï¿½}ï¿½[ï¿½ï¿½ï¿½Xï¿½V
+        timer += Time.deltaTime; // ƒ^ƒCƒ}[‚ğXV
 
-        int targetPosIndex = (int)(Target.position.z / StageSize);ï¿½@//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½É‚ï¿½ï¿½ï¿½Ì‚ï¿½
+        int targetPosIndex = (int)(Target.position.z / StageSize);@//ƒvƒŒƒCƒ„[‚ª‚Ç‚±‚É‚¢‚é‚Ì‚©
 
-        if (timer >= 120f)
+        if (targetPosIndex + aheadStage > StageIndex)@@//•K—v«‚É‰‚¶‚ÄƒXƒe[ƒW¶¬ŠÖ”‚ğŒÄ‚Ño‚µ
         {
-            // 120ï¿½bï¿½Èï¿½oï¿½ß‚ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Aï¿½ï¿½Qï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½ß‚ï¿½
-            RemovePassedObstacles(); // ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½íœï¿½ï¿½ï¿½ï¿½
-            return;
-        }
-
-        // ï¿½ï¿½ï¿½ï¿½ï¿½ÔŠuï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½É’Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-        DecreaseObstacleIntervalOverTime();
-
-        if (targetPosIndex + aheadStage > StageIndex)ï¿½@ï¿½@//ï¿½Kï¿½vï¿½ï¿½ï¿½É‰ï¿½ï¿½ï¿½ï¿½ÄƒXï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½ï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½
-        {
-            if (isGoalGenerated) //ï¿½ï¿½è‚­ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½Ì‚Å“ï¿½dï¿½É‚È‚ï¿½ï¿½Ä‚é‚¯ï¿½Ç‹Cï¿½É‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½
+            if (isGoalGenerated) //ãè‚­‚¢‚©‚È‚¢‚Ì‚Å“ñd‚É‚È‚Á‚Ä‚é‚¯‚Ç‹C‚É‚µ‚È‚¢‚Å
             {
-                if (Time.time >= nextObstacleTime) //ï¿½ï¿½ï¿½İ‚Ìï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½Ìï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ğ’´‚ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½
+                if (Time.time >= nextObstacleTime) //Œ»İ‚ÌŠÔ‚ªŸ‚ÌáŠQ•¨¶¬ŠÔ‚ğ’´‚¦‚Ä‚¢‚é‚©‚ğŠm”F‚µŒÄ‚Ño‚µ
                 {
-                    GenerateObstacle(); //ï¿½ï¿½Qï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
-                    ScheduleNextObstacle(); //ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ÌŒvï¿½Z
+                    GenerateObstacle(); //áŠQ•¨‚Ì¶¬
+                    ScheduleNextObstacle(); //Ÿ‚Ì¶¬ŠÔ‚ÌŒvZ
                 }
-                RemovePassedObstacles(); // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê‚ï¿½ß‚ï¿½ï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½íœ
+
+                RemovePassedObstacles(); // ƒvƒŒƒCƒ„[‚ª’Ê‚è‰ß‚¬‚½áŠQ•¨‚ğíœ
                 return;
             }
 
@@ -73,35 +64,35 @@ public class AutoStage : MonoBehaviour
         }
 
 
-        if (Time.time >= nextObstacleTime)ï¿½@//ï¿½ï¿½ï¿½İ‚Ìï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½Ìï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ğ’´‚ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½
+        if (Time.time >= nextObstacleTime)@//Œ»İ‚ÌŠÔ‚ªŸ‚ÌáŠQ•¨¶¬ŠÔ‚ğ’´‚¦‚Ä‚¢‚é‚©‚ğŠm”F‚µŒÄ‚Ño‚µ
         {
-            GenerateObstacle();ï¿½@//ï¿½ï¿½Qï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
-            ScheduleNextObstacle();ï¿½@//ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ÌŒvï¿½Z
+            GenerateObstacle();@//áŠQ•¨‚Ì¶¬
+            ScheduleNextObstacle();@//Ÿ‚Ì¶¬ŠÔ‚ÌŒvZ
         }
 
-        RemovePassedObstacles(); // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê‚ï¿½ß‚ï¿½ï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½íœ
+        RemovePassedObstacles(); // ƒvƒŒƒCƒ„[‚ª’Ê‚è‰ß‚¬‚½áŠQ•¨‚ğíœ
 
-        if (timer >= 95f && !isGoalGenerated) // ï¿½^ï¿½Cï¿½ï¿½ï¿½ï¿½95ï¿½É’Bï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½
+        if (timer >= 95f && !isGoalGenerated) // ƒ^ƒCƒ€‚ª95‚É’B‚µ‚½‚Æ‚«
         {
-            GenerateGoalStage(); // ï¿½Sï¿½[ï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½Wï¿½ğ¶ï¿½
-            isGoalGenerated = true; // ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Lï¿½^
+            GenerateGoalStage(); // ƒS[ƒ‹ƒXƒe[ƒW‚ğ¶¬
+            isGoalGenerated = true; // ƒS[ƒ‹‚ª¶¬‚³‚ê‚½‚±‚Æ‚ğ‹L˜^
         }
 
     }
     void StageManager(int maps)
     {
-        if (maps <= StageIndex)ï¿½@//ï¿½ï¿½ï¿½Å‚É‘ï¿½ï¿½ï¿½Ä‚ï¿½Æ‚ï¿½ï¿½Ô‚ï¿½
+        if (maps <= StageIndex)@//‚·‚Å‚É‘«‚è‚Ä‚é‚Æ‚«•Ô‚·
         {
             return;
         }
 
-        for (int i = StageIndex + 1; i <= maps; i++)//ï¿½wï¿½è‚µï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½Wï¿½Ü‚Åì¬ï¿½ï¿½ï¿½ï¿½
+        for (int i = StageIndex + 1; i <= maps; i++)//w’è‚µ‚½ƒXƒe[ƒW‚Ü‚Åì¬‚·‚é
         {
             GameObject stage = MakeStage(i);
             StageList.Add(stage);
         }
 
-        while (StageList.Count > aheadStage + 2)//ï¿½Ã‚ï¿½ï¿½Xï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½íœï¿½ï¿½ï¿½ï¿½
+        while (StageList.Count > aheadStage + 1)//ŒÃ‚¢ƒXƒe[ƒW‚ğíœ‚·‚é
         {
             DestroyStage();
         }
@@ -109,86 +100,62 @@ public class AutoStage : MonoBehaviour
         StageIndex = maps;
     }
 
-    GameObject MakeStage(int index)ï¿½@//ï¿½Xï¿½eï¿½[ï¿½Wï¿½ğ¶ï¿½ï¿½ï¿½ï¿½ï¿½
+    GameObject MakeStage(int index)@//ƒXƒe[ƒW‚ğ¶¬‚·‚é
     {
 
-        int nextStage = Random.Range(0, stagenum.Length);ï¿½@//ï¿½Xï¿½eï¿½[ï¿½Wï¿½vï¿½ï¿½ï¿½nï¿½uï¿½ï¿½ï¿½çƒ‰ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½É‘Iï¿½ï¿½
+        int nextStage = Random.Range(0, stagenum.Length);@//ƒXƒe[ƒWƒvƒŒƒnƒu‚©‚çƒ‰ƒ“ƒ_ƒ€‚É‘I‚Ô
 
         GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(0, -0.5f, index * StageSize + 40 + 0.05f), Quaternion.identity);
 
         return stageObject;
     }
 
-void DestroyStage()ï¿½@//ï¿½Xï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½íœï¿½ï¿½ï¿½ï¿½
+    void DestroyStage()@//ƒXƒe[ƒW‚ğíœ‚·‚é
     {
-    if (StageList[0] != StageList[FirstStageIndex])
-    {
-        GameObject oldStage = StageList[0];
-        StageList.RemoveAt(0);
-        Destroy(oldStage); // ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½íœ
-    }
-}
-
-void GenerateObstacle() // ï¿½ï¿½Qï¿½ï¿½ï¿½ğ¶ï¿½ï¿½ï¿½ï¿½ï¿½
-{
-    int xPos = xPositions[Random.Range(0, xPositions.Length)];ï¿½@//ï¿½Rï¿½Â‚ï¿½xï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½çƒ‰ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½
-        int obstacleIndex = Random.Range(0, obstacles.Length);ï¿½@//ï¿½ï¿½Qï¿½ï¿½ï¿½vï¿½ï¿½ï¿½nï¿½uï¿½ï¿½ï¿½çƒ‰ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½
-
-        Vector3 spawnPosition = new Vector3(xPos, -0.5f, Target.position.z + obstacleDistance); // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½è‹—ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½
-    GameObject obstacle = Instantiate(obstacles[obstacleIndex], spawnPosition, Quaternion.identity);
-
-    ObstacleList.Add(obstacle); // ï¿½ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½É’Ç‰ï¿½
-}
-void ScheduleNextObstacle() // ï¿½ï¿½ï¿½Ìï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìƒ^ï¿½Cï¿½~ï¿½ï¿½ï¿½Oï¿½ï¿½İ’ï¿½
-{
-    nextObstacleTime = Time.time + Random.Range(minObstacleInterval, maxObstacleInterval);
-}
-
-void RemovePassedObstacles() // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê‚ï¿½ß‚ï¿½ï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½íœ
-{
-    for (int i = ObstacleList.Count - 1; i >= 0; i--)
-    {
-        if (ObstacleList[i].transform.position.z < Target.position.z - StageSize)
+        if (StageList[0] != StageList[FirstStageIndex])
         {
-            GameObject passedObstacle = ObstacleList[i];
-            ObstacleList.RemoveAt(i);
-            Destroy(passedObstacle);
+            GameObject oldStage = StageList[0];
+            StageList.RemoveAt(0);
+            Destroy(oldStage); // ƒCƒ“ƒXƒ^ƒ“ƒX‚ğíœ
         }
     }
-}
 
-void GenerateGoalStage()ï¿½@//ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½É’Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½
+    void GenerateObstacle() // áŠQ•¨‚ğ¶¬‚·‚é
     {
-    Vector3 goalPosition = new Vector3(0, -0.5f, StageIndex * StageSize + 120 + 0.05f); //ï¿½Sï¿½[ï¿½ï¿½ï¿½Ìƒvï¿½ï¿½ï¿½nï¿½uï¿½ÌƒTï¿½Cï¿½Yï¿½É‚ï¿½ï¿½ï¿½ï¿½120ï¿½ï¿½40+ï¿½Tï¿½Cï¿½Yï¿½É•ÏXï¿½ï¿½ï¿½ï¿½
-    GameObject goalStage = Instantiate(goalPrefab, goalPosition, Quaternion.identity);
-    StageList.Add(goalStage); // ï¿½Sï¿½[ï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½É’Ç‰ï¿½
+        int xPos = xPositions[Random.Range(0, xPositions.Length)];@//‚R‚Â‚ÌxÀ•W‚©‚çƒ‰ƒ“ƒ_ƒ€‚É
+        int obstacleIndex = Random.Range(0, obstacles.Length);@//áŠQ•¨ƒvƒŒƒnƒu‚©‚çƒ‰ƒ“ƒ_ƒ€‚É
 
-}
+        Vector3 spawnPosition = new Vector3(xPos, -0.5f, Target.position.z + obstacleDistance); // ƒvƒŒƒCƒ„[‚©‚çˆê’è‹——£æ‚É¶¬
+        GameObject obstacle = Instantiate(obstacles[obstacleIndex], spawnPosition, Quaternion.identity);
 
-// ï¿½ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÔŠuï¿½ï¿½ï¿½ï¿½ï¿½ÔŒoï¿½ß‚Å’Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-void DecreaseObstacleIntervalOverTime()
-{
-    // ï¿½oï¿½ßï¿½ï¿½Ô‚É‰ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ÔŠuï¿½ï¿½iï¿½Kï¿½Iï¿½É’Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    if (timer >= 0f && timer < 30f)
-    {
-        minObstacleInterval = 3f;
-        maxObstacleInterval = 5f;
+        ObstacleList.Add(obstacle); // áŠQ•¨‚ğƒŠƒXƒg‚É’Ç‰Á
     }
-    else if (timer >= 30f && timer < 60f)
+    void ScheduleNextObstacle() // Ÿ‚ÌáŠQ•¨¶¬‚Ìƒ^ƒCƒ~ƒ“ƒO‚ğİ’è
     {
-        minObstacleInterval = 1.5f;
-        maxObstacleInterval = 3f;
+        nextObstacleTime = Time.time + Random.Range(minObstacleInterval, maxObstacleInterval);
     }
-    else if (timer >= 60f && timer < 90f)
+
+    void RemovePassedObstacles() // ƒvƒŒƒCƒ„[‚ª’Ê‚è‰ß‚¬‚½áŠQ•¨‚ğíœ
     {
-        minObstacleInterval = 1f;
-        maxObstacleInterval = 2f;
+        for (int i = ObstacleList.Count - 1; i >= 0; i--)
+        {
+            if (ObstacleList[i].transform.position.z < Target.position.z - StageSize)
+            {
+                GameObject passedObstacle = ObstacleList[i];
+                ObstacleList.RemoveAt(i);
+                Destroy(passedObstacle);
+            }
+        }
     }
-    else if (timer >= 90f)
+
+    void GenerateGoalStage()@//ƒS[ƒ‹‚ğƒŠƒXƒg‚É’Ç‰Á‚·‚é
     {
-        minObstacleInterval = 0.5f;
-        maxObstacleInterval = 1.2f;
+        Vector3 goalPosition = new Vector3(0, -0.5f, StageIndex * StageSize + 120 + 0.05f); //ƒS[ƒ‹‚ÌƒvƒŒƒnƒu‚ÌƒTƒCƒY‚É‚æ‚Á‚Ä120‚ğ40+ƒTƒCƒY‚É•ÏX‚µ‚Ä
+        GameObject goalStage = Instantiate(goalPrefab, goalPosition, Quaternion.identity);
+        StageList.Add(goalStage); // ƒS[ƒ‹ƒXƒe[ƒW‚ğƒŠƒXƒg‚É’Ç‰Á
+
     }
-}
+
+   
 
 }

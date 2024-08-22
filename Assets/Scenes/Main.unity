@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &97838022 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7851723904058382248, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
+  m_PrefabInstance: {fileID: 1263750961}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &386732990 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 626841727593043518, guid: 3d18bbb968826e1438082ee1bf48bded, type: 3}
@@ -613,15 +618,19 @@ PrefabInstance:
     - target: {fileID: 96019119423278580, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
       propertyPath: image
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1374926538}
     - target: {fileID: 96019119423278580, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
       propertyPath: textBox
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2056473396}
     - target: {fileID: 96019119423278580, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
       propertyPath: blindfold
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 96019119423278580, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
+      propertyPath: subjectBox
+      value: 
+      objectReference: {fileID: 1484474670}
     - target: {fileID: 2593333293152868932, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -662,6 +671,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2962679482656743959, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7851723904058382248, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
       propertyPath: m_Name
       value: UIManager
@@ -672,7 +685,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2593333293152868932, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 741743441}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7851723904058382248, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2102257941}
   m_SourcePrefab: {fileID: 100100000, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
 --- !u!1 &1335782492
 GameObject:
@@ -899,6 +915,22 @@ PrefabInstance:
 --- !u!224 &1374926537 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1172540325893604292, guid: f66271ccf4ad1024f9d16edf68b1d467, type: 3}
+  m_PrefabInstance: {fileID: 1374926536}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1374926538 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 430206339268378298, guid: f66271ccf4ad1024f9d16edf68b1d467, type: 3}
+  m_PrefabInstance: {fileID: 1374926536}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1484474670 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9149603898048221410, guid: f66271ccf4ad1024f9d16edf68b1d467, type: 3}
   m_PrefabInstance: {fileID: 1374926536}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1557411895 stripped
@@ -1418,11 +1450,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042442947}
   m_CullTransparentMesh: 1
+--- !u!1 &2056473396 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 71668235321608314, guid: f66271ccf4ad1024f9d16edf68b1d467, type: 3}
+  m_PrefabInstance: {fileID: 1374926536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2102257938 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2593333293152868932, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
   m_PrefabInstance: {fileID: 1263750961}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2102257941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97838022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bbe0a38a18398540917f71ec27850ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2132849153
 GameObject:
   m_ObjectHideFlags: 0
