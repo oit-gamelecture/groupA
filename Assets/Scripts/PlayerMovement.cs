@@ -98,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "enemy")
+        if (other.gameObject.tag == "enemy" || other.gameObject.tag == "MoveEnemy")
         {
             TakeDamage(1f);
             anim.SetTrigger("Damage");

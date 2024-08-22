@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     public float destroySpeed = 3f;
     public float duration = 3.0f;
     public int distance = 100;
+    public float disableDuration = 2.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,10 +48,11 @@ public class EnemyController : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            collision.collider.enabled = false;
+           
             StartCoroutine("MoveDestroyCoroutine");
+            StartCoroutine("DisableCollidersTemporarily");
+           
         }
-        
     }
 
     IEnumerator MoveDestroyCoroutine()
@@ -65,6 +67,29 @@ public class EnemyController : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    IEnumerator DisableCollidersTemporarily()
+    {
+        GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("enemy");
+
+        foreach(GameObject obj in taggedObjects)
+        {
+            if(obj.GetComponent<Collider>() != null)
+            {
+                obj.GetComponent<Collider>().enabled = false;
+            }
+        }
+
+        yield return new WaitForSeconds(disableDuration);
+
+        foreach(GameObject obj in taggedObjects)
+        {
+            if(obj.GetComponent<Collider>()!=null)
+            {
+                obj.GetComponent<Collider>().enabled = true;
+            }
+        }
     }
 
 
