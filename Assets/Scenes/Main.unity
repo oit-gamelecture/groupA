@@ -604,8 +604,8 @@ MonoBehaviour:
   StageList:
   - {fileID: 654955956}
   ObstacleList: []
-  minObstacleInterval: 1
-  maxObstacleInterval: 3
+  minObstacleInterval: 3
+  maxObstacleInterval: 5
   obstacleDistance: 40
   goalPrefab: {fileID: 7720066019554524966, guid: ec8c845a4dda8654ca9d540191ec3b13, type: 3}
 --- !u!4 &1241279283
