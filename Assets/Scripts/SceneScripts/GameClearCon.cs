@@ -1,17 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.AssetImporters;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameClearCon : MonoBehaviour
 {
-    public GameObject ui;
+    public GameObject buttonUi;
+    public GameObject scoreUi;
     CanvasGroup canvasGroup;
+    Text scoreText;
     // Start is called before the first frame update
     void Start()
     {
-        canvasGroup = ui.GetComponent<CanvasGroup>();
+        canvasGroup = buttonUi.GetComponent<CanvasGroup>();
+        scoreText = scoreUi.GetComponent<Text>();
+
+        scoreText.text = "個人資産" + ScoreManager.Instance.Score + "＄";
     }
 
     // Update is called once per frame
