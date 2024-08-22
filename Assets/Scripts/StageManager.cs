@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AutoStage : MonoBehaviour
 {
@@ -154,5 +155,7 @@ public class AutoStage : MonoBehaviour
         StageList.Add(goalStage); // ゴールステージをリストに追加
 
     }
+
+   
 
 }
