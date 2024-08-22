@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.6251372, g: 0.695441, b: 0.7891682, a: 1}
+  m_IndirectSpecularColor: {r: 0.625131, g: 0.69543827, b: 0.78916645, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -141,6 +141,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1243319062}
     m_Modifications:
+    - target: {fileID: 1918704139497512241, guid: 268fdd02da9e2d545a6c84ae2c230ace, type: 3}
+      propertyPath: m_Text
+      value: "MVDA\u306E\u682A\u4FA1\u304C\u8A2D\u5B9A\u3057\u305F\u640D\u5207\u308A\u30E9\u30A4\u30F3\u3092\u4E0B\u56DE\u308A\u307E\u3057\u305F\u3002\u30DD\u30FC\u30C8\u30D5\u30A9\u30EA\u30AA\u306E\u518D\u691C\u8A0E\u3092\u304A\u52E7\u3081\u3057\u307E\u3059\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918704139497512241, guid: 268fdd02da9e2d545a6c84ae2c230ace, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4922872494705393177, guid: 268fdd02da9e2d545a6c84ae2c230ace, type: 3}
       propertyPath: m_Name
       value: MobilePhone

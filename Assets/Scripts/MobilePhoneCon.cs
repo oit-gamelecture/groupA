@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 
@@ -21,13 +22,17 @@ public class MobilePhoneCon : MonoBehaviour
 
     public GameObject textBox;
     private Text content;
+
+    private List<int> remainingValues;  // 未使用の値のリスト
+    private int[] allValues = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };  // 使用するすべての値
+
     // Start is called before the first frame update
     void Start()
     {
         //fpsを60に固定
         Application.targetFrameRate = 60;
 
-
+        ResetRemainingValues(); //乱数リストをリセット
         originalPosition = new Vector3(0, -1110, 0); //image.rectTransform.localPosition;
         targetPosition1 = image.rectTransform.localPosition + new Vector3(0, 200, 0);
         targetPosition2 = image.rectTransform.localPosition + new Vector3(0, 1150, 0);
@@ -50,47 +55,71 @@ public class MobilePhoneCon : MonoBehaviour
         }
     }
 
+    private void ResetRemainingValues()
+    {
+        // 全ての値をリストに追加し、シャッフル
+        remainingValues = new List<int>(allValues);
+        ShuffleList(remainingValues);
+    }
+
+    private void ShuffleList(List<int> list)
+    {
+        // Fisher-Yatesアルゴリズムでリストをシャッフル
+        for (int i = 0; i < list.Count; i++)
+        {
+            int randomIndex = Random.Range(i, list.Count);
+            int temp = list[i];
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
+        }
+    }
     private void RandomText()
     {
-        int rad = Random.Range(1, 13);
+        if (remainingValues.Count == 0)
+        {
+            // すべての値が使用された場合、リセットして再シャッフル
+            ResetRemainingValues();
+        }
+        int rad = remainingValues[0];
+        remainingValues.RemoveAt(0);
 
         switch (rad)
         {
             case 1:
-                content.text = "MVDAの株価が暴落か！！！" + rad;
+                content.text = "MVDAの株価が設定した損切りラインを下回りました。ポートフォリオの再検討をお勧めします。";
                 break;
             case 2:
-                content.text = "" + rad;
+                content.text = "Amazingの株価が急落しました。速やかな対応が必要です。";
                 break;
             case 3:
-                content.text = "" + rad;
+                content.text = "Googolの株が目標価格に達しませんでした。売却を検討してください。";
                 break;
             case 4:
-                content.text = "" + rad;
+                content.text = "Microhardの株が急落し、損失が発生しています。ポートフォリオの調整を推奨します。";
                 break;
             case 5:
-                content.text = "" + rad;
+                content.text = "Tessleの株価が大幅に下落しました。至急対策を講じる必要があります。";
                 break;
             case 6:
-                content.text = "" + rad;
+                content.text = "MetaWorldの株が急落しました。損失を最小限に抑えるための行動が求められます。";
                 break;
             case 7:
-                content.text = "" + rad;
+                content.text = "Aprilの株価が設定した基準を下回りました。売却を検討してください。";
                 break;
             case 8:
-                content.text = "" + rad;
+                content.text = "Netfreedomの株が目標価格に届かず、損失が拡大しています。対策が必要です。";
                 break;
             case 9:
-                content.text = "" + rad;
+                content.text = "Distinyの株価が設定ラインを下回りました。早急な対応をお勧めします。";
                 break;
             case 10:
-                content.text = "" + rad;
+                content.text = "Starboxの株が急落しています。適切な対応が必要です。";
                 break;
             case 11:
-                content.text = "" + rad;
+                content.text = "WcDonaldsの株価が急落しました。速やかな行動を推奨します。";
                 break;
             case 12:
-                content.text = "" + rad;
+                content.text = "PepsiColaの株が目標価格に達していません。ポートフォリオの調整を検討してください。";
                 break;
             default:
                 Debug.Log("rad関数で想定していない値が選ばれている。何かがおかしい。");
