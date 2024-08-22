@@ -35,13 +35,10 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(!GameObject.Find("Player").GetComponent<PlayerMovement>().strike)
-        {
-            if(Vector3.Distance(transform.position, player.position) <= distance)
-            {
+      
                 transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - speed * Time.deltaTime);
-            }
-        }
+            
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -50,7 +47,7 @@ public class EnemyController : MonoBehaviour
         {
            
             StartCoroutine("MoveDestroyCoroutine");
-            StartCoroutine("DisableCollidersTemporarily");
+            
            
         }
     }
@@ -69,28 +66,7 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator DisableCollidersTemporarily()
-    {
-        GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("enemy");
-
-        foreach(GameObject obj in taggedObjects)
-        {
-            if(obj.GetComponent<Collider>() != null)
-            {
-                obj.GetComponent<Collider>().enabled = false;
-            }
-        }
-
-        yield return new WaitForSeconds(disableDuration);
-
-        foreach(GameObject obj in taggedObjects)
-        {
-            if(obj.GetComponent<Collider>()!=null)
-            {
-                obj.GetComponent<Collider>().enabled = true;
-            }
-        }
-    }
+    
 
 
 }
