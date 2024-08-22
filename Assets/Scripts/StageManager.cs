@@ -55,7 +55,6 @@ public class AutoStage : MonoBehaviour
                     GenerateObstacle(); //障害物の生成
                     ScheduleNextObstacle(); //次の生成時間の計算
                 }
-
                 RemovePassedObstacles(); // プレイヤーが通り過ぎた障害物を削除
                 return;
             }
@@ -92,7 +91,7 @@ public class AutoStage : MonoBehaviour
             StageList.Add(stage);
         }
 
-        while (StageList.Count > aheadStage + 1)//古いステージを削除する
+        while (StageList.Count > aheadStage +2)//古いステージを削除する
         {
             DestroyStage();
         }
