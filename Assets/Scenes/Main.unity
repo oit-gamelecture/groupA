@@ -586,8 +586,9 @@ MonoBehaviour:
   stagenum:
   - {fileID: 201751362945448899, guid: aba62e6639e24b644b5fb6637a8f5b9d, type: 3}
   obstacles:
-  - {fileID: 117884, guid: 75f9a59d6ed455149b2c7ba975114f3d, type: 3}
-  - {fileID: 6217859664019750943, guid: 0686c32a15c162d4abc1f288576f4a25, type: 3}
+  - {fileID: 100044, guid: 500c1cab2bb35e341a9872cbf95a69e7, type: 3}
+  - {fileID: 132730, guid: 8f471c4b9671c924c91024350703632b, type: 3}
+  - {fileID: 7109340372341602353, guid: 6d8aa0b8b9b51294db3e0fd4cbef94a9, type: 3}
   FirstStageIndex: 1
   aheadStage: 3
   StageList:
