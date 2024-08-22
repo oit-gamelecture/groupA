@@ -17,16 +17,16 @@ public class EnemyController : MonoBehaviour
         int r = Random.Range(1, 3);
         if(r == 1)
         {
-            transform.position = new Vector3(-3, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-3, 0, transform.position.z);
         }
 
         if(r==2)
         {
-            transform.position = new Vector3(0, transform.position.y, transform.position.z);
+            transform.position = new Vector3(0, 0, transform.position.z);
         }
         else
         {
-            transform.position = new Vector3(3, transform.position.y, transform.position.z);
+            transform.position = new Vector3(3,0, transform.position.z);
         }
 
 
