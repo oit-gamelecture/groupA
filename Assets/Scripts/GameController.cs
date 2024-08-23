@@ -70,6 +70,7 @@ public class GameController : MonoBehaviour
             timer = 0;
             timerText.text = "TIme : 000.0s";
         }
+
     }
 
     ///<summary>
@@ -93,6 +94,8 @@ public class GameController : MonoBehaviour
         Debug.Log("Start!!!");
         SetPlayState(PlayState.Play);
         GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = true;
+        
+        
     }
 
     ///<summary>

@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public Slider slide;
     public bool strike = false;
     public bool isFeatureActive = true;
+   
 
     private float currentHealth; 
     private Animator anim;
@@ -32,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
         currentHealth = MaxHealth;
         slide.maxValue = MaxHealth;
         slide.value = MaxHealth;
+       
     }
 
     //Update is called once per frame
