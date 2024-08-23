@@ -41,53 +41,47 @@ public class AutoStage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         timer += Time.deltaTime; // タイマーを更新
 
-        int targetPosIndex = (int)(Target.position.z / StageSize);　//プレイヤーがどこにいるのか
+        int targetPosIndex = (int)(Target.position.z / StageSize); // プレイヤーの位置を決定
 
-        if (timer >= 120f)
+        if (timer < 120f)
         {
-            // 120秒以上経過した場合、障害物の生成を止める
-            RemovePassedObstacles(); // 既に生成されている障害物だけを削除する
-            return;
-        }
+            // 時間経過に応じて障害物生成間隔を短くする
+            DecreaseObstacleIntervalOverTime();
 
-        // 生成間隔を徐々に短くする
-        DecreaseObstacleIntervalOverTime();
-
-        if (targetPosIndex + aheadStage > StageIndex)　　//必要性に応じてステージ生成関数を呼び出し
-        {
-            if (isGoalGenerated) //上手くいかないので二重になってるけど気にしないで
+            if (targetPosIndex + aheadStage > StageIndex)
             {
-                if (Time.time >= nextObstacleTime) //現在の時間が次の障害物生成時間を超えているかを確認し呼び出し
+                if (isGoalGenerated)
                 {
-                    GenerateObstacle(); //障害物の生成
-                    ScheduleNextObstacle(); //次の生成時間の計算
+                    if (Time.time >= nextObstacleTime)
+                    {
+                        GenerateObstacle();
+                        ScheduleNextObstacle();
+                    }
+                    RemovePassedObstacles();
+                    return;
                 }
-                RemovePassedObstacles(); // プレイヤーが通り過ぎた障害物を削除
-                return;
+
+                StageManager(targetPosIndex + aheadStage);
             }
 
-            StageManager(targetPosIndex + aheadStage);
+            if (Time.time >= nextObstacleTime)
+            {
+                GenerateObstacle();
+                ScheduleNextObstacle();
+            }
+
+            RemovePassedObstacles();
         }
 
-
-        if (Time.time >= nextObstacleTime)　//現在の時間が次の障害物生成時間を超えているかを確認し呼び出し
+        if (timer >= 95f && !isGoalGenerated)
         {
-            GenerateObstacle();　//障害物の生成
-            ScheduleNextObstacle();　//次の生成時間の計算
+            GenerateGoalStage();
+            isGoalGenerated = true;
         }
-
-        RemovePassedObstacles(); // プレイヤーが通り過ぎた障害物を削除
-
-        if (timer >= 95f && !isGoalGenerated) // タイムが95に達したとき
-        {
-            GenerateGoalStage(); // ゴールステージを生成
-            isGoalGenerated = true; // ゴールが生成されたことを記録
-        }
-
     }
+
     void StageManager(int maps)
     {
         if (maps <= StageIndex)　//すでに足りてるとき返す
