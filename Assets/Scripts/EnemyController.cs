@@ -10,9 +10,13 @@ public class EnemyController : MonoBehaviour
     public float duration = 3.0f;
     public int distance = 100;
     public float disableDuration = 2.0f;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
+        transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, 180, transform.eulerAngles.z);
+        anim = GetComponent<Animator>();
         player = GameObject.Find("Player").transform;
         int r = Random.Range(1, 3);
         if(r == 1)
@@ -36,8 +40,8 @@ public class EnemyController : MonoBehaviour
     void FixedUpdate()
     {
       
-                transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - speed * Time.deltaTime);
-            
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - speed * Time.deltaTime);
+        anim.SetBool("Walk", true);
         
     }
 
@@ -58,7 +62,7 @@ public class EnemyController : MonoBehaviour
 
         while(timeElapsed < duration)
         {
-            transform.Translate(Vector3.left * destroySpeed * Time.deltaTime);
+            transform.Translate(Vector3.right * destroySpeed * Time.deltaTime);
             timeElapsed += Time.deltaTime;
             yield return null;
         }

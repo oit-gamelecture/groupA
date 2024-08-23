@@ -46,6 +46,16 @@ public class AutoStage : MonoBehaviour
 
         int targetPosIndex = (int)(Target.position.z / StageSize);　//プレイヤーがどこにいるのか
 
+        if (timer >= 120f)
+        {
+            // 120秒以上経過した場合、障害物の生成を止める
+            RemovePassedObstacles(); // 既に生成されている障害物だけを削除する
+            return;
+        }
+
+        // 生成間隔を徐々に短くする
+        DecreaseObstacleIntervalOverTime();
+
         if (targetPosIndex + aheadStage > StageIndex)　　//必要性に応じてステージ生成関数を呼び出し
         {
             if (isGoalGenerated) //上手くいかないので二重になってるけど気にしないで
@@ -55,7 +65,6 @@ public class AutoStage : MonoBehaviour
                     GenerateObstacle(); //障害物の生成
                     ScheduleNextObstacle(); //次の生成時間の計算
                 }
-
                 RemovePassedObstacles(); // プレイヤーが通り過ぎた障害物を削除
                 return;
             }
@@ -92,7 +101,7 @@ public class AutoStage : MonoBehaviour
             StageList.Add(stage);
         }
 
-        while (StageList.Count > aheadStage + 1)//古いステージを削除する
+        while (StageList.Count > aheadStage + 2)//古いステージを削除する
         {
             DestroyStage();
         }
@@ -156,6 +165,30 @@ public class AutoStage : MonoBehaviour
 
     }
 
-   
+    // 障害物生成間隔を時間経過で短くする
+    void DecreaseObstacleIntervalOverTime()
+    {
+        // 経過時間に応じて生成間隔を段階的に短くする
+        if (timer >= 0f && timer < 30f)
+        {
+            minObstacleInterval = 3f;
+            maxObstacleInterval = 5f;
+        }
+        else if (timer >= 30f && timer < 60f)
+        {
+            minObstacleInterval = 1.5f;
+            maxObstacleInterval = 3f;
+        }
+        else if (timer >= 60f && timer < 90f)
+        {
+            minObstacleInterval = 1f;
+            maxObstacleInterval = 2f;
+        }
+        else if (timer >= 90f)
+        {
+            minObstacleInterval = 0.5f;
+            maxObstacleInterval = 1.2f;
+        }
+    }
 
 }
