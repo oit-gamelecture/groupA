@@ -38,7 +38,7 @@ public class MobilePhoneCon : MonoBehaviour
         ResetRemainingValues(); //乱数リストをリセット
         originalPosition = new Vector3(0, -1050, 0); //image.rectTransform.localPosition;
         targetPosition1 = image.rectTransform.localPosition + new Vector3(0, 190, 0);
-        targetPosition2 = image.rectTransform.localPosition + new Vector3(0, 935, 0);
+        targetPosition2 = image.rectTransform.localPosition + new Vector3(0, 935 + 190, 0);
         audioSource = GetComponent<AudioSource>();
         content = textBox.GetComponent<Text>();
         subject = subjectBox.GetComponent<Text>();

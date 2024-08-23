@@ -30,6 +30,8 @@ public class GameClearCon : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             SceneManager.LoadScene("Title");
+            ScoreManager.Instance.ResetScore();
+
         }
     }
 }

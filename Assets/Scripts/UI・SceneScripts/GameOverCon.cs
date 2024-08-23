@@ -24,6 +24,7 @@ public class GameOverCon : MonoBehaviour
         if (Input.anyKey && !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
         {
             SceneManager.LoadScene("main");
+            ScoreManager.Instance.ResetScore();
         }
     }
 }
