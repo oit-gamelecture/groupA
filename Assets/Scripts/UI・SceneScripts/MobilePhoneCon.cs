@@ -95,7 +95,7 @@ public class MobilePhoneCon : MonoBehaviour
                 content.text = "MVDAの株価が設定した損切りラインを下回りました。ポートフォリオの再検討をお勧めします。";
                 break;
             case 2:
-                subject.text = "Amazing株価急落に関するお知らせ";
+                subject.text = "Amazing株価急落について";
                 content.text = "Amazingの株価が急落しました。速やかな対応が必要です。";
                 break;
             case 3:

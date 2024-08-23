@@ -7,24 +7,39 @@ using UnityEngine.UI;
 
 public class GameOverCon : MonoBehaviour
 {
-    public GameObject scoreUi;
-    Text scoreText;
+    public AudioSource audioSource;
+    public AudioClip buttonAudioClip;
+    private bool isTransitioning = false;
+    //public GameObject scoreUi;
+    //Text scoreText;
     // Start is called before the first frame update
     void Start()
     {
-        scoreText = scoreUi.GetComponent<Text>();
+        audioSource = GetComponent<AudioSource>();
 
-        scoreText.text = "個人資産" + ScoreManager.Instance.Score + "＄";
+        //scoreText = scoreUi.GetComponent<Text>();
+
+        //scoreText.text = "個人資産" + ScoreManager.Instance.Score + "＄";
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey && !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
+        if (Input.anyKey && !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2) && !isTransitioning)
         {
-            SceneManager.LoadScene("main");
+            //SceneManager.LoadScene("main");
             ScoreManager.Instance.ResetScore();
+            isTransitioning = true;  // シーン遷移が二重に実行されないようにする
+            StartCoroutine(PlaySoundAndTransition());
         }
+    }
+
+    private IEnumerator PlaySoundAndTransition()
+    {
+        audioSource.PlayOneShot(buttonAudioClip);
+        yield return new WaitForSeconds(1f);  // 効果音が鳴り終わるまで待機
+        SceneManager.LoadScene("main");
+        ScoreManager.Instance.ResetScore();
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,29 +7,40 @@ public class GameClearCon : MonoBehaviour
 {
     public GameObject buttonUi;
     public GameObject scoreUi;
-    CanvasGroup canvasGroup;
-    Text scoreText;
-    // Start is called before the first frame update
+    private CanvasGroup canvasGroup;
+    private Text scoreText;
+
+    public AudioSource audioSource;
+    public AudioClip buttonAudioClip;
+    private bool isTransitioning = false;
+
     void Start()
     {
         canvasGroup = buttonUi.GetComponent<CanvasGroup>();
         scoreText = scoreUi.GetComponent<Text>();
+        audioSource = GetComponent<AudioSource>();
 
         scoreText.text = "個人資産" + ScoreManager.Instance.Score + "＄";
     }
 
-    // Update is called once per frame
     void Update()
     {
         float sin = Mathf.Sin(Time.time);
         float absSin = Mathf.Abs(sin);
         canvasGroup.alpha = absSin;
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && !isTransitioning)
         {
-            SceneManager.LoadScene("Title");
-            ScoreManager.Instance.ResetScore();
-
+            isTransitioning = true;  // シーン遷移が二重に実行されないようにする
+            StartCoroutine(PlaySoundAndTransition());
         }
+    }
+
+    private IEnumerator PlaySoundAndTransition()
+    {
+        audioSource.PlayOneShot(buttonAudioClip);
+        yield return new WaitForSeconds(1.5f);  // 効果音が鳴り終わるまで待機
+        SceneManager.LoadScene("Title");
+        ScoreManager.Instance.ResetScore();
     }
 }
