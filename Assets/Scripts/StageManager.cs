@@ -154,7 +154,7 @@ public class AutoStage : MonoBehaviour
     void GenerateGoalStage()　//ゴールをリストに追加する
     {
         Vector3 goalPosition = new Vector3(0, -0.5f, StageIndex * StageSize + 120 + 0.05f); //ゴールのプレハブのサイズによって120を40+サイズに変更して
-        GameObject goalStage = Instantiate(goalPrefab, goalPosition, Quaternion.identity);
+        GameObject goalStage = Instantiate(goalPrefab, goalPosition, Quaternion.Euler(0,180,0));
         StageList.Add(goalStage); // ゴールステージをリストに追加
 
     }

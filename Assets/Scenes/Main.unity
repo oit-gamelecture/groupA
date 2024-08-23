@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.625131, g: 0.69543827, b: 0.78916645, a: 1}
+  m_IndirectSpecularColor: {r: 0.6251372, g: 0.695441, b: 0.7891682, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -679,7 +679,7 @@ MonoBehaviour:
   minObstacleInterval: 3
   maxObstacleInterval: 5
   obstacleDistance: 40
-  goalPrefab: {fileID: 7720066019554524966, guid: ec8c845a4dda8654ca9d540191ec3b13, type: 3}
+  goalPrefab: {fileID: 3484735478315683009, guid: ec6b9f020507ec340a5fbd6229627d54, type: 3}
 --- !u!4 &1241279283
 Transform:
   m_ObjectHideFlags: 0
