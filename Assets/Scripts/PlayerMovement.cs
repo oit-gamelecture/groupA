@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -107,6 +108,16 @@ public class PlayerMovement : MonoBehaviour
             strike = true;
             StartCoroutine("DisableFeatureCoroutine");
         }
+
+        if(other.gameObject.tag == "trip")
+        {
+            TakeDamage(0.5f);
+            anim.SetTrigger("Trip");
+            anim.SetTrigger("Up");
+            anim.SetTrigger("Back");
+            strike = true;
+            StartCoroutine("TripFeatureCoroutine");
+        }
     }
 
     IEnumerator DisableFeatureCoroutine()
@@ -114,6 +125,14 @@ public class PlayerMovement : MonoBehaviour
         
         speed = -6;
         yield return new WaitForSeconds(1.7f);
+        speed = 10;
+    }
+
+    IEnumerator TripFeatureCoroutine()
+    {
+        speed = 0;
+        yield return new WaitForSeconds(1.0f);
+        
         speed = 10;
     }
 

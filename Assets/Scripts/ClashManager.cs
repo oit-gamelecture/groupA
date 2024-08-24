@@ -16,7 +16,7 @@ public class ClashManager : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "enemy" )
+        if (collision.gameObject.tag == "enemy" || collision.gameObject.tag == "trip")
         {
             audioSource.Play();
            
