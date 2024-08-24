@@ -108,7 +108,7 @@ public class AutoStage : MonoBehaviour
 
         int nextStage = Random.Range(0, stagenum.Length);　//ステージプレハブからランダムに選ぶ
 
-        GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(0, -0.5f, index * StageSize + 40 + 0.05f), Quaternion.identity);
+        GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(0, -0.5f, index * StageSize + 40), Quaternion.identity);
 
         return stageObject;
     }
@@ -153,7 +153,7 @@ public class AutoStage : MonoBehaviour
 
     void GenerateGoalStage()　//ゴールをリストに追加する
     {
-        Vector3 goalPosition = new Vector3(0, -0.5f, StageIndex * StageSize + 120 + 0.05f); //ゴールのプレハブのサイズによって120を40+サイズに変更して
+        Vector3 goalPosition = new Vector3(0, -0.5f, StageIndex * StageSize + 120 ); //ゴールのプレハブのサイズによって120を40+サイズに変更して
         GameObject goalStage = Instantiate(goalPrefab, goalPosition, Quaternion.Euler(0,180,0));
         StageList.Add(goalStage); // ゴールステージをリストに追加
 
@@ -165,23 +165,23 @@ public class AutoStage : MonoBehaviour
         // 経過時間に応じて生成間隔を段階的に短くする
         if (timer >= 0f && timer < 30f)
         {
-            minObstacleInterval = 3f;
-            maxObstacleInterval = 5f;
+            minObstacleInterval = 1f;
+            maxObstacleInterval = 3f;
         }
         else if (timer >= 30f && timer < 60f)
         {
-            minObstacleInterval = 1.5f;
-            maxObstacleInterval = 3f;
+            minObstacleInterval = 0.8f;
+            maxObstacleInterval = 2f;
         }
         else if (timer >= 60f && timer < 90f)
         {
-            minObstacleInterval = 1f;
-            maxObstacleInterval = 2f;
+            minObstacleInterval = 0.5f;
+            maxObstacleInterval = 1.2f;
         }
         else if (timer >= 90f)
         {
-            minObstacleInterval = 0.5f;
-            maxObstacleInterval = 1.2f;
+            minObstacleInterval = 0.3f;
+            maxObstacleInterval = 0.8f;
         }
     }
 

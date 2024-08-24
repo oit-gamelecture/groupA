@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.6251372, g: 0.695441, b: 0.7891682, a: 1}
+  m_IndirectSpecularColor: {r: 0.62513727, g: 0.695441, b: 0.78916824, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -665,6 +665,8 @@ MonoBehaviour:
   Target: {fileID: 386732990}
   stagenum:
   - {fileID: 201751362945448899, guid: aba62e6639e24b644b5fb6637a8f5b9d, type: 3}
+  - {fileID: 6573445396962180181, guid: 423690db01a59094fb1395e51ceef4c3, type: 3}
+  - {fileID: 4213758220855222586, guid: 7380b072f6860e54a93c3d3a8bb8c7d9, type: 3}
   obstacles:
   - {fileID: 100044, guid: 500c1cab2bb35e341a9872cbf95a69e7, type: 3}
   - {fileID: 132730, guid: 8f471c4b9671c924c91024350703632b, type: 3}
@@ -1594,6 +1596,10 @@ PrefabInstance:
     - target: {fileID: 6428216314009698156, guid: 3d18bbb968826e1438082ee1bf48bded, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6714848125672141174, guid: 3d18bbb968826e1438082ee1bf48bded, type: 3}
+      propertyPath: m_Center.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
