@@ -25,6 +25,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 verticalTargetPosition;
     private bool jumping = false;
     private float jumpStart;
+    private bool canMove = false;
+    private bool canJump = false;
+    private bool canMoveLane = false;
+    
 
     //Use this for initialization
     void Start()
@@ -34,69 +38,83 @@ public class PlayerMovement : MonoBehaviour
         currentHealth = MaxHealth;
         slide.maxValue = MaxHealth;
         slide.value = MaxHealth;
-       
+
+        StartCoroutine(ReadyGoCoroutine());
     }
 
     //Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (canMove)
         {
-            ChangeLane(-3);
-        }
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            ChangeLane(3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Jump();
-        }
-
-        if (jumping)
-        {
-            float ratio = (transform.position.z - jumpStart) / jumpLength;
-            if (ratio >= 1f)
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                jumping = false;
-                anim.SetBool("Jumping", false);
+                ChangeLane(-3);
+            }
+            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                ChangeLane(3);
+            }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Jump();
+            }
+
+            if (jumping)
+            {
+                float ratio = (transform.position.z - jumpStart) / jumpLength;
+                if (ratio >= 1f)
+                {
+                    jumping = false;
+                    anim.SetBool("Jumping", false);
+                }
+                else
+                {
+                    verticalTargetPosition.y = Mathf.Sin(ratio * Mathf.PI) * jumpHeight;
+                }
             }
             else
             {
-                verticalTargetPosition.y = Mathf.Sin(ratio * Mathf.PI) * jumpHeight;
+                verticalTargetPosition.y = Mathf.MoveTowards(verticalTargetPosition.y, 0, 5 * Time.deltaTime);
             }
+            Vector3 targetPosition = new Vector3(verticalTargetPosition.x, verticalTargetPosition.y, transform.position.z);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, laneSpeed * Time.deltaTime);
         }
-        else
-        {
-            verticalTargetPosition.y = Mathf.MoveTowards(verticalTargetPosition.y, 0, 5 * Time.deltaTime);
-        }
-        Vector3 targetPosition = new Vector3(verticalTargetPosition.x, verticalTargetPosition.y, transform.position.z);
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, laneSpeed * Time.deltaTime);
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = Vector3.forward * speed;
+        if (canMove)
+        {
+            rb.velocity = Vector3.forward * speed;
+        }
     }
 
     void ChangeLane(int direction)
     {
-        int targetLane = currentLane + direction;
-        if (targetLane < 0 || targetLane > 6)
-            return;
-        currentLane = targetLane;
-        verticalTargetPosition = new Vector3((currentLane - 3), 0, 0);
+        if (canMoveLane)
+        {
+            int targetLane = currentLane + direction;
+            if (targetLane < 0 || targetLane > 6)
+                return;
+            currentLane = targetLane;
+            verticalTargetPosition = new Vector3((currentLane - 3), 0, 0);
+        }
     }
 
     void Jump()
     {
-        if (!jumping)
+        if (canJump)
         {
-            jumpStart = transform.position.z;
-            anim.SetFloat("JumpSpeed", speed / jumpLength);
-            anim.SetBool("Jumping", true);
-            jumping = true;
+            if (!jumping)
+            {
+                jumpStart = transform.position.z;
+                anim.SetFloat("JumpSpeed", speed / jumpLength);
+                anim.SetBool("Jumping", true);
+                jumping = true;
+            }
         }
+    
     }
 
     private void OnCollisionEnter(Collision other)
@@ -131,9 +149,26 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator TripFeatureCoroutine()
     {
         speed = 0;
+        
         yield return new WaitForSeconds(1.0f);
         
         speed = 10;
+    }
+
+    IEnumerator ReadyGoCoroutine()
+    {
+        speed = 0;
+        canMove = false;
+        canJump = false;
+        canMoveLane = false;
+        yield return new WaitForSeconds(0);
+        canMove = true;
+        canJump = true;
+        canMoveLane = true;
+        anim.SetTrigger("idle");
+        speed = 10;
+       
+      
     }
 
     void TakeDamage(float Damage)
