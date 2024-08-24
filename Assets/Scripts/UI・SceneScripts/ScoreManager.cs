@@ -4,7 +4,7 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; }
 
-    public int Score { get; private set; }
+    public float Score { get; private set; }
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public void AddScore(int amount)
+    public void AddScore(float amount)
     {
         Score += amount;
         Debug.Log("スコアが増えました: " + Score);
@@ -27,6 +27,6 @@ public class ScoreManager : MonoBehaviour
 
     public void ResetScore()
     {
-        Score = 0;
+        Score = 500000;
     }
 }

@@ -20,7 +20,7 @@ public class GameClearCon : MonoBehaviour
         scoreText = scoreUi.GetComponent<Text>();
         audioSource = GetComponent<AudioSource>();
 
-        scoreText.text = "個人資産" + ScoreManager.Instance.Score + "＄";
+        scoreText.text = "個人資産：" + ScoreManager.Instance.Score + "＄";
     }
 
     void Update()

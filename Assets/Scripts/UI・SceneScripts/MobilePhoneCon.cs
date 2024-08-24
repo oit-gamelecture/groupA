@@ -30,6 +30,13 @@ public class MobilePhoneCon : MonoBehaviour
     private int[] allValues = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };  // 使用するすべての値
 
     // Start is called before the first frame update
+
+
+    private float scoreTime;    //スコアに時間をかける用の変数
+    public float pastTime;
+    public GameObject scoreTextBox;
+    private Text scoreText;
+
     void Start()
     {
         //fpsを60に固定
@@ -48,11 +55,19 @@ public class MobilePhoneCon : MonoBehaviour
         image.rectTransform.localPosition = originalPosition;
         StartCoroutine(CallMethodAtRandomIntervals());
 
+        ScoreManager.Instance.ResetScore();
+        scoreTime = Time.time;
+        scoreText = scoreTextBox.GetComponent<Text>();
+        scoreText.text = "個人資産：" + ScoreManager.Instance.Score + "$";
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        pastTime = Time.time - scoreTime;
+        scoreText.text = "個人資産：" + ScoreManager.Instance.Score + "$";
         if (Input.GetKeyDown(KeyCode.Space) && !isMoving)
         {
             // コルーチンを開始して位置を移動する
@@ -95,8 +110,8 @@ public class MobilePhoneCon : MonoBehaviour
                 content.text = "MVDAの株価が設定した損切りラインを下回りました。ポートフォリオの再検討をお勧めします。";
                 break;
             case 2:
-                subject.text = "Amazing株価急落について";
-                content.text = "Amazingの株価が急落しました。速やかな対応が必要です。";
+                subject.text = "Amazone株価急落について";
+                content.text = "Amazoneの株価が急落しました。速やかな対応が必要です。";
                 break;
             case 3:
                 subject.text = "Googol株式の緊急売却推奨";
@@ -205,12 +220,7 @@ public class MobilePhoneCon : MonoBehaviour
                     StartCoroutine(PlayGoodNewsSound());
                     Debug.Log("売った！！");
                     decisionMade = true;
-
-                    if (!scoreAdded)
-                    {
-                        ScoreManager.Instance.AddScore(-100);  // スコアを加算
-                        scoreAdded = true;
-                    }
+                    ScoreManager.Instance.AddScore(-20 * pastTime);  // スコアを加算
                 }
                 waitTime += Time.deltaTime;
                 yield return null;
@@ -229,8 +239,7 @@ public class MobilePhoneCon : MonoBehaviour
         }
         else
         {
-            ScoreManager.Instance.AddScore(-10000);  // スコアを加算
-
+            ScoreManager.Instance.AddScore(-1000 * pastTime);  // スコアを加算
 
             // 何も押されなかったので元の位置に戻る
             elapsedTime = 0f;
@@ -271,4 +280,5 @@ public class MobilePhoneCon : MonoBehaviour
 
         }
     }
+    
 }
