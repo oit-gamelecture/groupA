@@ -681,6 +681,15 @@ MonoBehaviour:
   - {fileID: 970057209542090895, guid: 92012621f380aa249ac02c3aa24dfe56, type: 3}
   - {fileID: 7325003548650096384, guid: e9af8adf06263ec41ba8656d4105c276, type: 3}
   - {fileID: 302068705794031573, guid: 7f76838b67c39fa439c40b266b59e370, type: 3}
+  - {fileID: 8026366018723771578, guid: fcbb17d7bc4600a4c99ee82bf17e3fb0, type: 3}
+  - {fileID: 6217859664019750943, guid: 0686c32a15c162d4abc1f288576f4a25, type: 3}
+  - {fileID: 5728014160923188860, guid: 3fff656abf2a60b48a5aff4cf8ec90ee, type: 3}
+  - {fileID: 6217859664019750943, guid: 0686c32a15c162d4abc1f288576f4a25, type: 3}
+  - {fileID: 5728014160923188860, guid: 3fff656abf2a60b48a5aff4cf8ec90ee, type: 3}
+  - {fileID: 6217859664019750943, guid: 0686c32a15c162d4abc1f288576f4a25, type: 3}
+  - {fileID: 5728014160923188860, guid: 3fff656abf2a60b48a5aff4cf8ec90ee, type: 3}
+  - {fileID: 6217859664019750943, guid: 0686c32a15c162d4abc1f288576f4a25, type: 3}
+  - {fileID: 6217859664019750943, guid: 0686c32a15c162d4abc1f288576f4a25, type: 3}
   FirstStageIndex: 1
   aheadStage: 3
   StageList:
@@ -870,6 +879,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2593333293152868932, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962679482656743959, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7851723904058382248, guid: cfc3dcc0e714c604f87dd87ff408c0c9, type: 3}

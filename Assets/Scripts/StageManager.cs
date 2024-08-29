@@ -165,23 +165,23 @@ public class AutoStage : MonoBehaviour
         // Œo‰ßŽžŠÔ‚É‰ž‚¶‚Ä¶¬ŠÔŠu‚ð’iŠK“I‚É’Z‚­‚·‚é
         if (timer >= 0f && timer < 30f)
         {
-            minObstacleInterval = 1f;
-            maxObstacleInterval = 3f;
+            minObstacleInterval = 0.8f;
+            maxObstacleInterval = 1f;
         }
         else if (timer >= 30f && timer < 60f)
         {
-            minObstacleInterval = 0.8f;
-            maxObstacleInterval = 2f;
+            minObstacleInterval = 0.5f;
+            maxObstacleInterval = 0.8f;
         }
         else if (timer >= 60f && timer < 90f)
         {
-            minObstacleInterval = 0.5f;
-            maxObstacleInterval = 1.2f;
+            minObstacleInterval = 0.3f;
+            maxObstacleInterval = 0.5f;
         }
         else if (timer >= 90f)
         {
             minObstacleInterval = 0.3f;
-            maxObstacleInterval = 0.8f;
+            maxObstacleInterval = 0.5f;
         }
     }
 
