@@ -58,7 +58,7 @@ public class MobilePhoneCon : MonoBehaviour
         ScoreManager.Instance.ResetScore();
         scoreTime = Time.time;
         scoreText = scoreTextBox.GetComponent<Text>();
-        scoreText.text = "個人資産：" + ScoreManager.Instance.Score + "$";
+        scoreText.text = "個人資産：＄" + ScoreManager.Instance.Score;
 
 
     }
@@ -67,7 +67,7 @@ public class MobilePhoneCon : MonoBehaviour
     void Update()
     {
         pastTime = Time.time - scoreTime;
-        scoreText.text = "個人資産：" + ScoreManager.Instance.Score + "$";
+        scoreText.text = "個人資産：＄" + ScoreManager.Instance.Score;
         if (Input.GetKeyDown(KeyCode.Space) && !isMoving)
         {
             // コルーチンを開始して位置を移動する
@@ -280,5 +280,5 @@ public class MobilePhoneCon : MonoBehaviour
 
         }
     }
-    
+
 }
