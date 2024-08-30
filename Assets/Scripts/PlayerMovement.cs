@@ -161,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
         canMove = false;
         canJump = false;
         canMoveLane = false;
-        yield return new WaitForSeconds(0);
+        yield return new WaitForSeconds(5);
         canMove = true;
         canJump = true;
         canMoveLane = true;
