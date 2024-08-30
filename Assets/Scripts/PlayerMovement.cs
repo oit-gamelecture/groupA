@@ -16,12 +16,12 @@ public class PlayerMovement : MonoBehaviour
     public Slider slide;
     public bool strike = false;
     public bool isFeatureActive = true;
-    public float jumpCooldown = 5f; // ƒWƒƒƒ“ƒv‚Å‚«‚È‚¢ŠÔi•bj
-    private bool isJumpRestricted = false; // ƒWƒƒƒ“ƒv§ŒÀ’†‚©‚Ç‚¤‚©
+    public float jumpCooldown = 5f; // ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Å‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½Ôiï¿½bï¿½j
+    private bool isJumpRestricted = false; // ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½
 
 
 
-    private float currentHealth; 
+    private float currentHealth;
     private Animator anim;
     private Rigidbody rb;
     private int currentLane = 3;
@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canMove = false;
     private bool canJump = false;
     private bool canMoveLane = false;
-    
+
 
     //Use this for initialization
     void Start()
@@ -118,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
                 StartCoroutine(JumpRestrictionCoroutine());
             }
         }
-    
+
     }
 
     private void OnCollisionEnter(Collision other)
@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine("DisableFeatureCoroutine");
         }
 
-        if(other.gameObject.tag == "trip")
+        if (other.gameObject.tag == "trip")
         {
             TakeDamage(0.5f);
             anim.SetTrigger("Trip");
@@ -144,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DisableFeatureCoroutine()
     {
-        
+
         speed = -6;
         yield return new WaitForSeconds(1.7f);
         speed = 10;
@@ -153,9 +153,9 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator TripFeatureCoroutine()
     {
         speed = 0;
-        
+
         yield return new WaitForSeconds(1.0f);
-        
+
         speed = 10;
     }
 
@@ -172,15 +172,15 @@ public class PlayerMovement : MonoBehaviour
         canMoveLane = true;
         anim.SetTrigger("idle");
         speed = 10;
-       
-      
+
+
     }
 
     IEnumerator JumpRestrictionCoroutine()
     {
-        isJumpRestricted = true; // ƒWƒƒƒ“ƒv‚ğ§ŒÀ‚·‚é
-        yield return new WaitForSeconds(jumpCooldown); // §ŒÀŠÔ‘Ò‚Â
-        isJumpRestricted = false; // ƒWƒƒƒ“ƒv§ŒÀ‰ğœ
+        isJumpRestricted = true; // ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ğ§Œï¿½ï¿½ï¿½ï¿½ï¿½
+        yield return new WaitForSeconds(jumpCooldown); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‘Ò‚ï¿½
+        isJumpRestricted = false; // ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 
 
@@ -188,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
     {
         currentHealth = currentHealth - Damage;
         slide.value = currentHealth;
-        if(slide.value == 0)
+        if (slide.value == 0)
         {
             SceneManager.LoadScene("GameOver");
         }
