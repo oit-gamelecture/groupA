@@ -21,6 +21,27 @@ public class AutoStage : MonoBehaviour
     public float minObstacleInterval = 1f; // áŠQ•¨¶¬‚ÌÅ¬ŠÔŠuiŒã‚Å•ÏX‰Âj
     public float maxObstacleInterval = 3f; // áŠQ•¨¶¬‚ÌÅ‘åŠÔŠuiŒã‚Å•ÏX‰Âj
 
+    [SerializeField]
+    private float min30 = 0;
+    [SerializeField]
+    private float max30 = 0;
+
+    [SerializeField]
+    private float min60 = 0;
+    [SerializeField]
+    private float max60 = 0;
+
+    [SerializeField]
+    private float min90 = 0;
+    [SerializeField]
+    private float max90 = 0;
+
+    [SerializeField]
+    private float min120 = 0;
+    [SerializeField]
+    private float max120 = 0;
+
+
     private float nextObstacleTime; // ŽŸ‚ÉáŠQ•¨‚ð¶¬‚·‚éŽžŠÔ‚Ì•Ï”
     public float obstacleDistance = 40f; // áŠQ•¨‚ðƒvƒŒƒCƒ„[‚©‚ç‚Ç‚ê‚¾‚¯—£‚µ‚Ä¶¬‚·‚é‚©(ƒeƒXƒg)
 
@@ -165,23 +186,23 @@ public class AutoStage : MonoBehaviour
         // Œo‰ßŽžŠÔ‚É‰ž‚¶‚Ä¶¬ŠÔŠu‚ð’iŠK“I‚É’Z‚­‚·‚é
         if (timer >= 0f && timer < 30f)
         {
-            minObstacleInterval = 0.8f;
-            maxObstacleInterval = 1f;
+            minObstacleInterval = min30;
+            maxObstacleInterval = max30;
         }
         else if (timer >= 30f && timer < 60f)
         {
-            minObstacleInterval = 0.5f;
-            maxObstacleInterval = 0.8f;
+            minObstacleInterval = min60;
+            maxObstacleInterval = max60;
         }
         else if (timer >= 60f && timer < 90f)
         {
-            minObstacleInterval = 0.3f;
-            maxObstacleInterval = 0.5f;
+            minObstacleInterval = min90;
+            maxObstacleInterval = max90;
         }
         else if (timer >= 90f)
         {
-            minObstacleInterval = 0.3f;
-            maxObstacleInterval = 0.5f;
+            minObstacleInterval = min120;
+            maxObstacleInterval = max120;
         }
     }
 
