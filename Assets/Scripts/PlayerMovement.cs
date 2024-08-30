@@ -16,7 +16,10 @@ public class PlayerMovement : MonoBehaviour
     public Slider slide;
     public bool strike = false;
     public bool isFeatureActive = true;
-   
+    public float jumpCooldown = 5f; // ジャンプできない時間（秒）
+    private bool isJumpRestricted = false; // ジャンプ制限中かどうか
+
+
 
     private float currentHealth; 
     private Animator anim;
@@ -104,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        if (canJump)
+        if (canJump && !isJumpRestricted)
         {
             if (!jumping)
             {
@@ -112,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetFloat("JumpSpeed", speed / jumpLength);
                 anim.SetBool("Jumping", true);
                 jumping = true;
+                StartCoroutine(JumpRestrictionCoroutine());
             }
         }
     
@@ -161,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
         canMove = false;
         canJump = false;
         canMoveLane = false;
+        isJumpRestricted = false;
         yield return new WaitForSeconds(5);
         canMove = true;
         canJump = true;
@@ -170,6 +175,14 @@ public class PlayerMovement : MonoBehaviour
        
       
     }
+
+    IEnumerator JumpRestrictionCoroutine()
+    {
+        isJumpRestricted = true; // ジャンプを制限する
+        yield return new WaitForSeconds(jumpCooldown); // 制限時間待つ
+        isJumpRestricted = false; // ジャンプ制限解除
+    }
+
 
     void TakeDamage(float Damage)
     {
