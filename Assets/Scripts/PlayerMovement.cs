@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumpRestricted = false; // �W�����v���������ǂ���
 
 
-
+    private bool isReadyGoCoroutineRunning = false;
     private float currentHealth;
     private Animator anim;
     private Rigidbody rb;
@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
         StartCoroutine(ReadyGoCoroutine());
     }
+
 
     //Update is called once per frame
     void Update()
@@ -166,14 +167,12 @@ public class PlayerMovement : MonoBehaviour
         canJump = false;
         canMoveLane = false;
         isJumpRestricted = false;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(0);
         canMove = true;
         canJump = true;
         canMoveLane = true;
         anim.SetTrigger("idle");
         speed = 10;
-
-
     }
 
     IEnumerator JumpRestrictionCoroutine()
