@@ -27,11 +27,18 @@ public class TitleCon : MonoBehaviour
         float absSin = Mathf.Abs(sin);
         canvasGroup.alpha = absSin;
 
-        if (Input.anyKey && !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2) && !isTransitioning)
+        if (Input.GetKey(KeyCode.Space) && !isTransitioning)
         {
             //SceneManager.LoadScene("Prologue");
             isTransitioning = true;  // シーン遷移が二重に実行されないようにする
             StartCoroutine(PlaySoundAndTransition());
+        }
+        if (Input.GetKey(KeyCode.Escape) && !isTransitioning)
+        {
+            //SceneManager.LoadScene("main");
+            ScoreManager.Instance.ResetScore();
+            isTransitioning = true;  // シーン遷移が二重に実行されないようにする
+            StartCoroutine(PlaySoundAndTransitionEnd());
         }
     }
 
@@ -41,5 +48,11 @@ public class TitleCon : MonoBehaviour
         yield return new WaitForSeconds(1f);  // 効果音が鳴り終わるまで待機
         SceneManager.LoadScene("Prologue");
         ScoreManager.Instance.ResetScore();
+    }
+    private IEnumerator PlaySoundAndTransitionEnd()
+    {
+        audioSource.PlayOneShot(buttonAudioClip);
+        yield return new WaitForSeconds(1f);  // 効果音が鳴り終わるまで待機
+        Application.Quit();
     }
 }

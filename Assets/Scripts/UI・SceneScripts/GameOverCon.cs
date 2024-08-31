@@ -26,12 +26,26 @@ public class GameOverCon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey && !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2) && !isTransitioning)
+        if (Input.GetKey(KeyCode.Space) && !isTransitioning)
         {
             //SceneManager.LoadScene("main");
             ScoreManager.Instance.ResetScore();
             isTransitioning = true;  // シーン遷移が二重に実行されないようにする
             StartCoroutine(PlaySoundAndTransition());
+        }
+        if (Input.GetKey(KeyCode.Tab) && !isTransitioning)
+        {
+            //SceneManager.LoadScene("main");
+            ScoreManager.Instance.ResetScore();
+            isTransitioning = true;  // シーン遷移が二重に実行されないようにする
+            StartCoroutine(PlaySoundAndTransitionTitle());
+        }
+        if (Input.GetKey(KeyCode.Escape) && !isTransitioning)
+        {
+            //SceneManager.LoadScene("main");
+            ScoreManager.Instance.ResetScore();
+            isTransitioning = true;  // シーン遷移が二重に実行されないようにする
+            StartCoroutine(PlaySoundAndTransitionEnd());
         }
     }
 
@@ -41,5 +55,18 @@ public class GameOverCon : MonoBehaviour
         yield return new WaitForSeconds(1f);  // 効果音が鳴り終わるまで待機
         SceneManager.LoadScene("main");
         ScoreManager.Instance.ResetScore();
+    }
+    private IEnumerator PlaySoundAndTransitionTitle()
+    {
+        audioSource.PlayOneShot(buttonAudioClip);
+        yield return new WaitForSeconds(1f);  // 効果音が鳴り終わるまで待機
+        SceneManager.LoadScene("Title");
+        ScoreManager.Instance.ResetScore();
+    }
+    private IEnumerator PlaySoundAndTransitionEnd()
+    {
+        audioSource.PlayOneShot(buttonAudioClip);
+        yield return new WaitForSeconds(1f);  // 効果音が鳴り終わるまで待機
+        Application.Quit();
     }
 }

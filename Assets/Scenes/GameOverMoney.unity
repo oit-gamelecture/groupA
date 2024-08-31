@@ -150,9 +150,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 69a052ec693fdcf498a2674967d639cd, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9fe65c2bc102a01418d0593c4126356c, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  buttonAudioClip: {fileID: 8300000, guid: f822214fed033d94a8fe6a9b502c0dc2, type: 3}
+  buttonAudioClip: {fileID: 8300000, guid: cfbb4e308cef99d4892d71791c7f007b, type: 3}
 --- !u!82 &324065676
 AudioSource:
   m_ObjectHideFlags: 0
@@ -504,7 +504,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6B7B\u4EA1"
+  m_Text: "\u7834\u7523"
 --- !u!222 &608606865
 CanvasRenderer:
   m_ObjectHideFlags: 0

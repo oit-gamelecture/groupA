@@ -20,7 +20,7 @@ public class GameClearCon : MonoBehaviour
         scoreText = scoreUi.GetComponent<Text>();
         audioSource = GetComponent<AudioSource>();
 
-        scoreText.text = "個人資産：＄" + ScoreManager.Instance.Score;
+        scoreText.text = "個人資産:$" + ScoreManager.Instance.Score;
     }
 
     void Update()
@@ -34,6 +34,13 @@ public class GameClearCon : MonoBehaviour
             isTransitioning = true;  // シーン遷移が二重に実行されないようにする
             StartCoroutine(PlaySoundAndTransition());
         }
+        if (Input.GetKey(KeyCode.Escape) && !isTransitioning)
+        {
+            //SceneManager.LoadScene("main");
+            ScoreManager.Instance.ResetScore();
+            isTransitioning = true;  // シーン遷移が二重に実行されないようにする
+            StartCoroutine(PlaySoundAndTransitionEnd());
+        }
     }
 
     private IEnumerator PlaySoundAndTransition()
@@ -42,5 +49,12 @@ public class GameClearCon : MonoBehaviour
         yield return new WaitForSeconds(1.5f);  // 効果音が鳴り終わるまで待機
         SceneManager.LoadScene("Title");
         ScoreManager.Instance.ResetScore();
+    }
+
+    private IEnumerator PlaySoundAndTransitionEnd()
+    {
+        audioSource.PlayOneShot(buttonAudioClip);
+        yield return new WaitForSeconds(1f);  // 効果音が鳴り終わるまで待機
+        Application.Quit();
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 
 public class MobilePhoneCon : MonoBehaviour
@@ -36,6 +37,7 @@ public class MobilePhoneCon : MonoBehaviour
     public float pastTime;
     public GameObject scoreTextBox;
     private Text scoreText;
+    private float decreaseManager = 0.1f;
 
     void Start()
     {
@@ -67,7 +69,13 @@ public class MobilePhoneCon : MonoBehaviour
     void Update()
     {
         pastTime = Time.time - scoreTime;
-        scoreText.text = "個人資産：＄" + ScoreManager.Instance.Score;
+        scoreText.text = "個人資産$" + ScoreManager.Instance.Score;
+        ScoreManager.Instance.AddScore(-1 * pastTime * pastTime * decreaseManager);
+
+        if (ScoreManager.Instance.Score < 0)
+        {
+            SceneManager.LoadScene("GameOverMoney");
+        }
         if (Input.GetKeyDown(KeyCode.Space) && !isMoving)
         {
             // コルーチンを開始して位置を移動する
@@ -220,7 +228,8 @@ public class MobilePhoneCon : MonoBehaviour
                     StartCoroutine(PlayGoodNewsSound());
                     Debug.Log("売った！！");
                     decisionMade = true;
-                    ScoreManager.Instance.AddScore(-20 * pastTime);  // スコアを加算
+                    ScoreManager.Instance.AddScore(-20 * pastTime * decreaseManager);  // スコアを加算
+                    decreaseManager *= 0.5f;
                 }
                 waitTime += Time.deltaTime;
                 yield return null;
@@ -239,7 +248,7 @@ public class MobilePhoneCon : MonoBehaviour
         }
         else
         {
-            ScoreManager.Instance.AddScore(-1000 * pastTime);  // スコアを加算
+            ScoreManager.Instance.AddScore(-1000 * pastTime * decreaseManager);  // スコアを加算
 
             // 何も押されなかったので元の位置に戻る
             elapsedTime = 0f;
